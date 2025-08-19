@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bot, User, Send } from "lucide-react";
+import { Bot, User, Send, Mic, Square } from "lucide-react";
 import { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -15,37 +15,89 @@ export function ChatAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-        const viewport = scrollAreaRef.current.querySelector("div");
+        const viewport = scrollAreaAref.current.querySelector("div");
         if(viewport) viewport.scrollTop = viewport.scrollHeight;
     }
   }, [messages]);
 
-  const handleSubmit = async (e: FormEvent) => {
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = 'en-US';
+      
+      recognitionRef.current.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+        handleSubmit(new Event('submit'), transcript);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsRecording(false);
+      };
+
+      recognitionRef.current.onerror = (event: any) => {
+        console.error("Speech recognition error", event.error);
+        setIsRecording(false);
+      };
+    }
+  }, []);
+
+  const toggleRecording = () => {
+    if (isRecording) {
+      recognitionRef.current?.stop();
+      setIsRecording(false);
+    } else {
+      recognitionRef.current?.start();
+      setIsRecording(true);
+    }
+  };
+
+
+  const handleSubmit = async (e: FormEvent | Event, queryOverride?: string) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    const currentInput = queryOverride || input;
+    if (!currentInput.trim()) return;
 
     setIsLoading(true);
-    const userMessage: ChatMessage = { id: Date.now().toString(), role: "user", content: input };
+    const userMessage: ChatMessage = { id: Date.now().toString(), role: "user", content: currentInput };
     setMessages((prev) => [...prev, userMessage]);
-    const currentInput = input;
-    setInput("");
     
-    const answer = await handleQuery({ query: currentInput });
+    if(!queryOverride) {
+      setInput("");
+    }
     
-    const assistantMessage: ChatMessage = { id: (Date.now() + 1).toString(), role: "assistant", content: answer };
+    const result = await handleQuery({ query: currentInput });
+    
+    const assistantMessage: ChatMessage = { 
+      id: (Date.now() + 1).toString(), 
+      role: "assistant", 
+      content: result.answer,
+      audioData: result.answerAudio,
+    };
     setMessages((prev) => [...prev, assistantMessage]);
     setIsLoading(false);
+
+    if (result.answerAudio && audioRef.current) {
+      audioRef.current.src = result.answerAudio;
+      audioRef.current.play().catch(e => console.error("Audio playback failed", e));
+    }
   };
 
   return (
     <Card className="h-full flex flex-col max-h-[calc(100vh-6rem)]">
       <CardHeader>
-        <CardTitle>AI Assistant</CardTitle>
-        <CardDescription>Ask about sensor data, trends, or anomalies.</CardDescription>
+        <CardTitle>AI Coffee Expert</CardTitle>
+        <CardDescription>Ask about your coffee storage conditions.</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col gap-4 overflow-hidden">
         <ScrollArea className="flex-1 pr-4" ref={scrollAreaRef}>
@@ -98,16 +150,20 @@ export function ChatAssistant() {
         </ScrollArea>
         <form onSubmit={handleSubmit} className="flex items-center gap-2 border-t pt-4">
           <Input 
-            placeholder="What's the temperature trend?" 
+            placeholder="Ask about your coffee storage..." 
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            disabled={isLoading}
+            disabled={isLoading || isRecording}
             className="flex-1"
           />
-          <Button type="submit" disabled={isLoading || !input.trim()} size="icon">
+           <Button type="button" onClick={toggleRecording} disabled={isLoading} size="icon" variant={isRecording ? "destructive" : "outline"}>
+            {isRecording ? <Square className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+          </Button>
+          <Button type="submit" disabled={isLoading || !input.trim() || isRecording} size="icon">
             <Send className="h-4 w-4" />
           </Button>
         </form>
+        <audio ref={audioRef} className="hidden" />
       </CardContent>
     </Card>
   );

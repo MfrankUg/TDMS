@@ -3,13 +3,15 @@
 import { querySensorData, QuerySensorDataInput, QuerySensorDataOutput } from "@/ai/flows/query-sensor-data";
 import { predictOutOfRange, PredictOutOfRangeInput, PredictOutOfRangeOutput } from "@/ai/flows/predict-out-of-range";
 
-export async function handleQuery(input: QuerySensorDataInput): Promise<string> {
+export async function handleQuery(input: QuerySensorDataInput): Promise<QuerySensorDataOutput> {
   try {
     const result: QuerySensorDataOutput = await querySensorData(input);
-    return result.answer;
+    return result;
   } catch (error) {
     console.error("Error in handleQuery:", error);
-    return "Sorry, I encountered an error while processing your request. Please try again.";
+    return {
+        answer: "Sorry, I encountered an error while processing your request. Please try again."
+    };
   }
 }
 

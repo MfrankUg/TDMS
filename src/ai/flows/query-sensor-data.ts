@@ -3,7 +3,7 @@
 'use server';
 
 /**
- * @fileOverview An AI agent that answers questions about sensor data.
+ * @fileOverview An AI agent that answers questions about sensor data for coffee storage.
  *
  * - querySensorData - A function that handles querying sensor data and providing answers.
  * - QuerySensorDataInput - The input type for the querySensorData function.
@@ -11,15 +11,25 @@
  */
 
 import {ai} from '@/ai/genkit';
+import {googleAI} from '@genkit-ai/googleai';
 import {z} from 'genkit';
+import wav from 'wav';
 
 const QuerySensorDataInputSchema = z.object({
-  query: z.string().describe('The question about the sensor data.'),
+  query: z.string().describe('The question about the sensor data for coffee storage.'),
 });
 export type QuerySensorDataInput = z.infer<typeof QuerySensorDataInputSchema>;
 
 const QuerySensorDataOutputSchema = z.object({
-  answer: z.string().describe('The answer to the question about the sensor data.'),
+  answer: z
+    .string()
+    .describe('The answer to the question about the coffee storage sensor data.'),
+  answerAudio: z
+    .string()
+    .optional()
+    .describe(
+      'The answer converted to audio as a data URI. Expected format: \'data:audio/wav;base64,<encoded_data>\'.'
+    ),
 });
 export type QuerySensorDataOutput = z.infer<typeof QuerySensorDataOutputSchema>;
 
@@ -27,32 +37,76 @@ export async function querySensorData(input: QuerySensorDataInput): Promise<Quer
   return querySensorDataFlow(input);
 }
 
-const getSensorData = ai.defineTool({
-  name: 'getSensorData',
-  description: 'Retrieves sensor data from the data store.',
-  inputSchema: z.object({
-    dataType: z.string().describe('The type of sensor data to retrieve (e.g., temperature, humidity, dust particles).'),
-    timeRange: z.string().describe('The time range for which to retrieve the data (e.g., last hour, last day, last week).'),
-  }),
-  outputSchema: z.string().describe('The sensor data in JSON format.'),
-}, async (input) => {
-  // TODO: Implement the actual data retrieval logic here
-  // This is a placeholder. Replace with actual data retrieval from Firestore.
-  console.log("Getting sensor data: " + JSON.stringify(input));
-  return `{\"temperature\": 25, \"humidity\": 60, \"dustParticles\": 100}`;
-});
+const getSensorData = ai.defineTool(
+  {
+    name: 'getSensorData',
+    description: 'Retrieves sensor data for coffee storage from the data store.',
+    inputSchema: z.object({
+      dataType: z
+        .string()
+        .describe(
+          'The type of sensor data to retrieve (e.g., temperature, humidity, dust particles).'
+        ),
+      timeRange: z
+        .string()
+        .describe(
+          'The time range for which to retrieve the data (e.g., last hour, last day, last week).'
+        ),
+    }),
+    outputSchema: z.string().describe('The sensor data in JSON format.'),
+  },
+  async input => {
+    // TODO: Implement the actual data retrieval logic here
+    // This is a placeholder. Replace with actual data retrieval from Firestore.
+    console.log('Getting sensor data: ' + JSON.stringify(input));
+    return `{\"temperature\": 25, \"humidity\": 60, \"dustParticles\": 100}`;
+  }
+);
 
 const prompt = ai.definePrompt({
   name: 'querySensorDataPrompt',
   tools: [getSensorData],
   input: {schema: QuerySensorDataInputSchema},
-  output: {schema: QuerySensorDataOutputSchema},
-  prompt: `You are an AI assistant helping users understand their sensor data.
-  Use the available tools to answer questions about sensor data trends and anomalies.
+  output: {schema: z.object({answer: z.string()})},
+  prompt: `You are an AI assistant expert in coffee storage, helping users understand their sensor data in a coffee warehouse.
+  Ideal conditions for green coffee bean storage are:
+  - Temperature: 15-25°C (60-77°F)
+  - Humidity: 55-65%
+  - Low dust/contaminants.
+
+  Use the available tools to answer questions about sensor data trends and anomalies related to coffee storage.
   If the user asks about a specific sensor data type or time range, use the getSensorData tool to retrieve the data.
+  Provide friendly, conversational, and helpful answers.
 
   User question: {{{query}}}`,
 });
+
+async function toWav(
+  pcmData: Buffer,
+  channels = 1,
+  rate = 24000,
+  sampleWidth = 2
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const writer = new wav.Writer({
+      channels,
+      sampleRate: rate,
+      bitDepth: sampleWidth * 8,
+    });
+
+    let bufs = [] as any[];
+    writer.on('error', reject);
+    writer.on('data', function (d) {
+      bufs.push(d);
+    });
+    writer.on('end', function () {
+      resolve(Buffer.concat(bufs).toString('base64'));
+    });
+
+    writer.write(pcmData);
+    writer.end();
+  });
+}
 
 const querySensorDataFlow = ai.defineFlow(
   {
@@ -61,7 +115,32 @@ const querySensorDataFlow = ai.defineFlow(
     outputSchema: QuerySensorDataOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    const [{output: textOutput}, {media}] = await Promise.all([
+      prompt(input),
+      ai.generate({
+        model: googleAI.model('gemini-2.5-flash-preview-tts'),
+        config: {
+          responseModalities: ['AUDIO'],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: {voiceName: 'Algenib'},
+            },
+          },
+        },
+        prompt: (await prompt(input)).output!.answer,
+      }),
+    ]);
+    if (!media) {
+      throw new Error('no media returned');
+    }
+    const audioBuffer = Buffer.from(
+      media.url.substring(media.url.indexOf(',') + 1),
+      'base64'
+    );
+
+    return {
+      answer: textOutput!.answer,
+      answerAudio: 'data:audio/wav;base64,' + (await toWav(audioBuffer)),
+    };
   }
 );
