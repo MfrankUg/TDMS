@@ -22,7 +22,7 @@ export function ChatAssistant() {
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-        const viewport = scrollAreaAref.current.querySelector("div");
+        const viewport = scrollAreaRef.current.querySelector("div");
         if(viewport) viewport.scrollTop = viewport.scrollHeight;
     }
   }, [messages]);
