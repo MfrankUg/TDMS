@@ -4,12 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from "@/components/ui/chart";
 import { Sensor } from "@/lib/types";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface SensorChartProps {
   sensor: Sensor;
 }
 
 export function SensorChart({ sensor }: SensorChartProps) {
+  const { t } = useTranslation();
   const chartConfig = {
     value: {
       label: sensor.unit,
@@ -20,8 +22,8 @@ export function SensorChart({ sensor }: SensorChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{sensor.name} Trend</CardTitle>
-        <CardDescription>Last 30 hours</CardDescription>
+        <CardTitle>{t(sensor.id as any)} {t('trend')}</CardTitle>
+        <CardDescription>{t('last30Hours')}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[200px] w-full">

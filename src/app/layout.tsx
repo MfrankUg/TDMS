@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 import { Toaster } from '@/components/ui/toaster';
+import { LanguageProvider } from '@/lib/language';
 
 export const metadata: Metadata = {
   title: 'TDMS - Temperature and Dust monitoring System',
@@ -22,8 +23,10 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <AuthProvider>
-          {children}
-          <Toaster />
+          <LanguageProvider>
+            {children}
+            <Toaster />
+          </LanguageProvider>
         </AuthProvider>
       </body>
     </html>

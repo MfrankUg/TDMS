@@ -17,6 +17,7 @@ import { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 import { useLanguage } from "@/lib/language";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface VoiceAssistantProps {
   isOpen: boolean;
@@ -35,6 +36,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
   const recognitionRef = useRef<any>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const { language } = useLanguage();
+  const { t } = useTranslation();
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
@@ -90,12 +92,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
   const greetUser = useCallback(async () => {
     if (user?.email) {
         const userName = user.email.split('@')[0];
-        let greeting = `Hello ${userName}, how can I help you with your coffee storage today?`;
-
-        if (language !== 'en') {
-            const result = await handleTranslation({ text: greeting, targetLanguage: language });
-            greeting = result.translatedText;
-        }
+        let greeting = t('voiceGreeting', { userName });
 
         const assistantMessage: ChatMessage = {
             id: Date.now().toString(),
@@ -114,7 +111,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
         utteranceRef.current = utterance;
         window.speechSynthesis.speak(utterance);
     }
-  }, [user, language]);
+  }, [user, language, t]);
 
 
   useEffect(() => {
@@ -174,9 +171,9 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg w-full h-[70vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Voice Assistant</DialogTitle>
+          <DialogTitle>{t('voiceAssistant')}</DialogTitle>
           <DialogDescription>
-            Ask me anything about your coffee storage conditions.
+            {t('voiceAssistantDescription')}
           </DialogDescription>
         </DialogHeader>
         <div className="flex-1 overflow-hidden flex flex-col">

@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertTriangle, CheckCircle2, RefreshCw } from "lucide-react";
 import { PredictOutOfRangeOutput } from "@/ai/flows/predict-out-of-range";
+import { useTranslation } from "@/hooks/use-translation";
 
 export function PredictiveAlerts() {
   const [predictions, setPredictions] = useState<PredictOutOfRangeOutput | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const fetchPredictions = useCallback(async () => {
     setIsLoading(true);
@@ -29,12 +31,12 @@ export function PredictiveAlerts() {
       const result = await handlePrediction(input);
       setPredictions(result);
     } catch (e) {
-      setError("An unexpected error occurred while fetching predictions.");
+      setError(t('errorFetchingPredictions'));
       console.error(e);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     fetchPredictions();
@@ -44,7 +46,7 @@ export function PredictiveAlerts() {
     return (
       <div className="space-y-4">
          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Predictive Alerts</h3>
+            <h3 className="text-lg font-semibold">{t('predictiveAlerts')}</h3>
         </div>
         <Skeleton className="h-20 w-full" />
       </div>
@@ -55,15 +57,15 @@ export function PredictiveAlerts() {
     return (
       <div>
         <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold">Predictive Alerts</h3>
+            <h3 className="text-lg font-semibold">{t('predictiveAlerts')}</h3>
             <Button variant="outline" size="sm" onClick={fetchPredictions} disabled={isLoading}>
                 <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-                <span className="ml-2">Refresh</span>
+                <span className="ml-2">{t('refresh')}</span>
             </Button>
         </div>
         <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>{t('error')}</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
         </Alert>
       </div>
@@ -83,25 +85,25 @@ export function PredictiveAlerts() {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">Predictive Alerts</h3>
+        <h3 className="text-lg font-semibold">{t('predictiveAlerts')}</h3>
         <Button variant="outline" size="sm" onClick={fetchPredictions} disabled={isLoading}>
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-          <span className="ml-2">Refresh</span>
+          <span className="ml-2">{t('refresh')}</span>
         </Button>
       </div>
 
       {hasFailedPredictions ? (
         <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Prediction Failed</AlertTitle>
-            <AlertDescription>Could not retrieve predictions. Please try refreshing.</AlertDescription>
+            <AlertTitle>{t('predictionFailed')}</AlertTitle>
+            <AlertDescription>{t('couldNotRetrievePredictions')}</AlertDescription>
         </Alert>
       ) : alerts.length === 0 ? (
         <Alert variant="default" className="bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800">
           <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
-          <AlertTitle className="text-green-800 dark:text-green-300">All Systems Normal</AlertTitle>
+          <AlertTitle className="text-green-800 dark:text-green-300">{t('allSystemsNormal')}</AlertTitle>
           <AlertDescription className="text-green-700 dark:text-green-400">
-            No predicted out-of-range values. The environment is stable.
+            {t('noPredictedValues')}
           </AlertDescription>
         </Alert>
       ) : (
@@ -109,7 +111,7 @@ export function PredictiveAlerts() {
           {alerts.map((alert, index) => (
             <Alert key={index} variant="destructive">
               <AlertTriangle className="h-4 w-4" />
-              <AlertTitle>Predictive Alert!</AlertTitle>
+              <AlertTitle>{t('predictiveAlert')}</AlertTitle>
               <AlertDescription>{alert}</AlertDescription>
             </Alert>
           ))}

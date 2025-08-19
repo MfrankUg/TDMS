@@ -12,6 +12,7 @@ import { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { VoiceAssistant } from "./voice-assistant";
 import { useLanguage } from "@/lib/language";
+import { useTranslation } from "@/hooks/use-translation";
 
 export function ChatAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -20,6 +21,7 @@ export function ChatAssistant() {
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { language } = useLanguage();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -65,8 +67,8 @@ export function ChatAssistant() {
     <>
       <Card className="h-full flex flex-col max-h-[calc(100vh-6rem)]">
         <CardHeader>
-          <CardTitle>AI Coffee Expert</CardTitle>
-          <CardDescription>Ask about your coffee storage conditions.</CardDescription>
+          <CardTitle>{t('aiCoffeeExpert')}</CardTitle>
+          <CardDescription>{t('askAboutCoffeeStorage')}</CardDescription>
         </CardHeader>
         <CardContent className="flex-1 flex flex-col gap-4 overflow-hidden">
           <ScrollArea className="flex-1 pr-4" ref={scrollAreaRef}>
@@ -119,7 +121,7 @@ export function ChatAssistant() {
           </ScrollArea>
           <form onSubmit={handleSubmit} className="flex items-center gap-2 border-t pt-4">
             <Input 
-              placeholder="Ask about your coffee storage..." 
+              placeholder={t('askAboutCoffeeStoragePlaceholder')} 
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={isLoading}

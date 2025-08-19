@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/auth";
+import { useTranslation } from "@/hooks/use-translation";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
@@ -31,6 +32,7 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const { login } = useAuth();
+  const { t } = useTranslation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,9 +48,9 @@ export function LoginForm() {
   return (
     <Card className="mx-auto max-w-sm w-full">
       <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardTitle className="text-2xl">{t('login')}</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
+          {t('loginPrompt')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -59,7 +61,7 @@ export function LoginForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input placeholder="m@example.com" {...field} />
                   </FormControl>
@@ -72,7 +74,7 @@ export function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t('password')}</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
@@ -81,14 +83,14 @@ export function LoginForm() {
               )}
             />
             <Button type="submit" className="w-full">
-              Login
+              {t('login')}
             </Button>
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
+          {t('dontHaveAccount')}{" "}
           <Link href="/signup" className="underline hover:text-primary">
-            Sign up
+            {t('signUp')}
           </Link>
         </div>
       </CardContent>

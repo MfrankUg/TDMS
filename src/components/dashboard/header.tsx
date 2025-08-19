@@ -16,10 +16,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/auth";
 import { Languages } from "lucide-react";
 import { useLanguage } from "@/lib/language";
+import { useTranslation } from "@/hooks/use-translation";
 
 export function DashboardHeader() {
   const { user, logout } = useAuth();
   const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   
   const userInitial = user?.email?.[0].toUpperCase() || "U";
 
@@ -34,12 +36,12 @@ export function DashboardHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
               <Languages className="h-[1.2rem] w-[1.2rem]" />
-              <span className="sr-only">Select Language</span>
+              <span className="sr-only">{t('selectLanguage')}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Language</DropdownMenuLabel>
-            <DropdownMenuRadioGroup value={language} onValueChange={setLanguage}>
+            <DropdownMenuLabel>{t('language')}</DropdownMenuLabel>
+            <DropdownMenuRadioGroup value={language} onValueChange={(value) => setLanguage(value as any)}>
               <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="sw">Swahili</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="lg">Luganda</DropdownMenuRadioItem>
@@ -54,19 +56,19 @@ export function DashboardHeader() {
               <Avatar className="h-8 w-8">
                   <AvatarFallback>{userInitial}</AvatarFallback>
               </Avatar>
-              <span className="sr-only">Toggle user menu</span>
+              <span className="sr-only">{t('toggleUserMenu')}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>
-              <p>My Account</p>
+              <p>{t('myAccount')}</p>
               <p className="text-xs text-muted-foreground font-normal">{user?.email}</p>
               </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem disabled>Settings</DropdownMenuItem>
-            <DropdownMenuItem disabled>Support</DropdownMenuItem>
+            <DropdownMenuItem disabled>{t('settings')}</DropdownMenuItem>
+            <DropdownMenuItem disabled>{t('support')}</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>{t('logout')}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
