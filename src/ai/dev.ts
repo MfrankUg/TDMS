@@ -1,1 +1,5 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/predict-out-of-range.ts';
+import '@/ai/flows/query-sensor-data.ts';
