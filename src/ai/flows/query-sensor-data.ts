@@ -17,6 +17,8 @@ import wav from 'wav';
 
 const QuerySensorDataInputSchema = z.object({
   query: z.string().describe('The question about the sensor data for coffee storage.'),
+  generateAudio: z.boolean().optional().describe('Whether to generate audio for the response.'),
+  userName: z.string().optional().describe('The name of the user to greet.'),
 });
 export type QuerySensorDataInput = z.infer<typeof QuerySensorDataInputSchema>;
 
@@ -74,6 +76,10 @@ const prompt = ai.definePrompt({
   - Humidity: 55-65%
   - Low dust/contaminants.
 
+  {{#if userName}}
+  Start your response with a friendly greeting to the user, "{{userName}}".
+  {{/if}}
+  
   Use the available tools to answer questions about sensor data trends and anomalies related to coffee storage.
   If the user asks about a specific sensor data type or time range, use the getSensorData tool to retrieve the data.
   Provide friendly, conversational, and helpful answers.
@@ -115,21 +121,26 @@ const querySensorDataFlow = ai.defineFlow(
     outputSchema: QuerySensorDataOutputSchema,
   },
   async input => {
-    const [{output: textOutput}, {media}] = await Promise.all([
-      prompt(input),
-      ai.generate({
-        model: googleAI.model('gemini-2.5-flash-preview-tts'),
-        config: {
-          responseModalities: ['AUDIO'],
-          speechConfig: {
-            voiceConfig: {
-              prebuiltVoiceConfig: {voiceName: 'Algenib'},
-            },
+    const {output: textOutput} = await prompt(input);
+    const answer = textOutput!.answer;
+
+    if (!input.generateAudio) {
+      return { answer };
+    }
+
+    const {media} = await ai.generate({
+      model: googleAI.model('gemini-2.5-flash-preview-tts'),
+      config: {
+        responseModalities: ['AUDIO'],
+        speechConfig: {
+          voiceConfig: {
+            prebuiltVoiceConfig: {voiceName: 'Algenib'},
           },
         },
-        prompt: (await prompt(input)).output!.answer,
-      }),
-    ]);
+      },
+      prompt: answer,
+    });
+
     if (!media) {
       throw new Error('no media returned');
     }
@@ -139,7 +150,7 @@ const querySensorDataFlow = ai.defineFlow(
     );
 
     return {
-      answer: textOutput!.answer,
+      answer: answer,
       answerAudio: 'data:audio/wav;base64,' + (await toWav(audioBuffer)),
     };
   }
