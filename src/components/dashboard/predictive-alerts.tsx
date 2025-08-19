@@ -27,7 +27,7 @@ export async function PredictiveAlerts() {
         <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
         <AlertTitle className="text-green-800 dark:text-green-300">All Systems Normal</AlertTitle>
         <AlertDescription className="text-green-700 dark:text-green-400">
-          No predicted out-of-range values. The warehouse environment is stable.
+          No predicted out-of-range values. The environment is stable.
         </AlertDescription>
       </Alert>
     );

@@ -4,8 +4,8 @@ import { AuthProvider } from '@/lib/auth';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Warehouse Sentinel',
-  description: 'Monitor your warehouse with AI-powered insights.',
+  title: 'TDMS - Temperature and Dust monitoring System',
+  description: 'Monitor your environment with AI-powered insights.',
 };
 
 export default function RootLayout({
