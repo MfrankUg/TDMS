@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, FormEvent } from "react";
-import { handleQuery } from "@/lib/actions";
+import { handleQuery, handleTranslation } from "@/lib/actions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Bot, User, Send, Mic } from "lucide-react";
 import { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { VoiceAssistant } from "./voice-assistant";
+import { useLanguage } from "@/lib/language";
 
 export function ChatAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -18,6 +19,7 @@ export function ChatAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -36,12 +38,24 @@ export function ChatAssistant() {
     setInput("");
     setIsLoading(true);
 
-    const result = await handleQuery({ query: currentInput, generateAudio: false });
+    let query = currentInput;
+    if (language !== 'en') {
+      const translationResult = await handleTranslation({ text: currentInput, targetLanguage: 'en' });
+      query = translationResult.translatedText;
+    }
+
+    const result = await handleQuery({ query: query, generateAudio: false });
     
+    let answer = result.answer;
+    if (language !== 'en') {
+        const translationResult = await handleTranslation({ text: answer, targetLanguage: language });
+        answer = translationResult.translatedText;
+    }
+
     const assistantMessage: ChatMessage = { 
       id: (Date.now() + 1).toString(), 
       role: "assistant", 
-      content: result.answer,
+      content: answer,
     };
     setMessages((prev) => [...prev, assistantMessage]);
     setIsLoading(false);

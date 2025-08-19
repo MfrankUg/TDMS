@@ -9,12 +9,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/auth";
+import { Languages } from "lucide-react";
+import { useLanguage } from "@/lib/language";
 
 export function DashboardHeader() {
   const { user, logout } = useAuth();
+  const { language, setLanguage } = useLanguage();
   
   const userInitial = user?.email?.[0].toUpperCase() || "U";
 
@@ -25,6 +30,24 @@ export function DashboardHeader() {
         <span className="hidden md:inline-block">TDMS</span>
       </Link>
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Languages className="h-[1.2rem] w-[1.2rem]" />
+              <span className="sr-only">Select Language</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Language</DropdownMenuLabel>
+            <DropdownMenuRadioGroup value={language} onValueChange={setLanguage}>
+              <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="sw">Swahili</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="lg">Luganda</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="ru">Rutooro</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">

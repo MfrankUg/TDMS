@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { handleQuery } from "@/lib/actions";
+import { handleQuery, handleTranslation } from "@/lib/actions";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,7 @@ import { Bot, User, Mic, Square } from "lucide-react";
 import { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
+import { useLanguage } from "@/lib/language";
 
 interface VoiceAssistantProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const recognitionRef = useRef<any>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { language } = useLanguage();
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
@@ -47,30 +49,54 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
 
   const processQuery = useCallback(async (query: string, userName?: string) => {
     setIsLoading(true);
+
+    let translatedQuery = query;
+    if (language !== 'en') {
+      const transResult = await handleTranslation({ text: query, targetLanguage: 'en' });
+      translatedQuery = transResult.translatedText;
+    }
+
     const userMessage: ChatMessage = { id: Date.now().toString(), role: "user", content: query };
     setMessages((prev) => [...prev, userMessage]);
 
-    const result = await handleQuery({ query, generateAudio: true, userName });
+    const result = await handleQuery({ query: translatedQuery, generateAudio: true, userName });
     
+    let finalAnswer = result.answer;
+    let finalAudio = result.answerAudio;
+
+    if (language !== 'en') {
+      const transResult = await handleTranslation({ text: result.answer, targetLanguage: language });
+      finalAnswer = transResult.translatedText;
+      
+      const audioResult = await handleQuery({ query: finalAnswer, generateAudio: true });
+      finalAudio = audioResult.answerAudio;
+    }
+
     const assistantMessage: ChatMessage = {
       id: (Date.now() + 1).toString(),
       role: "assistant",
-      content: result.answer,
-      audioData: result.answerAudio,
+      content: finalAnswer,
+      audioData: finalAudio,
     };
     setMessages((prev) => [...prev, assistantMessage]);
     setIsLoading(false);
 
-    if (result.answerAudio && audioRef.current) {
-      audioRef.current.src = result.answerAudio;
+    if (finalAudio && audioRef.current) {
+      audioRef.current.src = finalAudio;
       audioRef.current.play().catch((e) => console.error("Audio playback failed", e));
     }
-  }, []);
+  }, [language]);
 
-  const greetUser = useCallback(() => {
+  const greetUser = useCallback(async () => {
     if (user?.email) {
         const userName = user.email.split('@')[0];
-        const greeting = `Hello ${userName}, how can I help you with your coffee storage today?`;
+        let greeting = `Hello ${userName}, how can I help you with your coffee storage today?`;
+
+        if (language !== 'en') {
+            const result = await handleTranslation({ text: greeting, targetLanguage: language });
+            greeting = result.translatedText;
+        }
+
         const assistantMessage: ChatMessage = {
             id: Date.now().toString(),
             role: "assistant",
@@ -79,6 +105,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
         setMessages([assistantMessage]);
         
         const utterance = new SpeechSynthesisUtterance(greeting);
+        utterance.lang = language;
         utterance.onstart = () => setIsSpeaking(true);
         utterance.onend = () => {
             setIsSpeaking(false);
@@ -87,7 +114,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
         utteranceRef.current = utterance;
         window.speechSynthesis.speak(utterance);
     }
-  }, [user]);
+  }, [user, language]);
 
 
   useEffect(() => {
@@ -112,7 +139,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
       recognitionRef.current = new SpeechRecognition();
       recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
-      recognitionRef.current.lang = 'en-US';
+      recognitionRef.current.lang = language;
 
       recognitionRef.current.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
@@ -132,7 +159,7 @@ export function VoiceAssistant({ isOpen, onOpenChange }: VoiceAssistantProps) {
     return () => {
       window.speechSynthesis.cancel();
     }
-  }, [processQuery]);
+  }, [processQuery, language]);
 
   const toggleRecording = (forceStart = false) => {
     if (isRecording && !forceStart) {
