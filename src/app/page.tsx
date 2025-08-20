@@ -24,7 +24,7 @@ export default function HomeComponent() {
   const carouselImages = [
     { src: "https://i.ibb.co/0ySs51QD/tdms-in-warehouse.png", alt: "TDMS in warehouse", hint: "warehouse monitoring" },
     { src: "https://i.ibb.co/R4b9qHCg/tdms-man-in-warehouse-with-equipment.png", alt: "Man in warehouse with TDMS equipment", hint: "warehouse worker" },
-    { src: "https://placehold.co/600x400.png", alt: "Modern warehouse interior", hint: "warehouse interior" },
+    { src: "https://i.ibb.co/j9TP7Jw6/Real-time-tdms.png", alt: "Real-time TDMS dashboard", hint: "dashboard ui" },
     { src: "https://placehold.co/600x400.png", alt: "Person checking coffee plants", hint: "coffee farm" },
     { src: "https://placehold.co/600x400.png", alt: "Close up of green coffee beans", hint: "green coffee" },
     { src: "https://placehold.co/600x400.png", alt: "Warehouse with stacked goods", hint: "warehouse logistics" },
