@@ -22,6 +22,7 @@ export default function HomeComponent() {
   const [count, setCount] = React.useState(0)
 
   const carouselImages = [
+    { src: "https://i.ibb.co/3s7xQvG/IMG-20240708-WA0013.jpg", alt: "Coffee beans being sorted", hint: "coffee sorting" },
     { src: "https://placehold.co/600x600.png", alt: "Coffee beans in a sack", hint: "coffee beans" },
     { src: "https://placehold.co/600x600.png", alt: "Modern warehouse interior", hint: "warehouse interior" },
     { src: "https://placehold.co/600x600.png", alt: "Person checking coffee plants", hint: "coffee farm" },
