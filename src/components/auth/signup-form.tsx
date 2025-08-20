@@ -30,6 +30,7 @@ import { ShieldCheck } from "lucide-react";
 const formSchema = z.object({
   fullName: z.string().min(1, { message: "Full name is required." }),
   email: z.string().email({ message: "Please enter a valid email." }),
+  telephone: z.string().min(1, { message: "Telephone number is required." }),
   role: z.string().min(1, { message: "Please select a role." }),
   password: z.string()
     .min(8, { message: "Password must be at least 8 characters." })
@@ -49,6 +50,7 @@ export function SignupForm() {
     defaultValues: {
       fullName: "",
       email: "",
+      telephone: "",
       role: "",
       password: "",
       confirmPassword: "",
@@ -94,6 +96,19 @@ export function SignupForm() {
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input placeholder="you@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="telephone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Telephone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your telephone number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -157,8 +172,8 @@ export function SignupForm() {
                     Forgot password?
                  </Link>
             </div>
-            <Button type="submit" className="w-full rounded-full" size="lg">
-              Sign Up & Start Monitoring
+            <Button type="submit" className="w-full">
+              Sign Up
             </Button>
           </form>
         </Form>
