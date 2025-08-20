@@ -37,7 +37,7 @@ export default function HomeComponent() {
               {t('login')}
             </Link>
           </Button>
-          <Button asChild size="lg" className="rounded-full font-bold animate-glowing">
+          <Button asChild size="lg" className="rounded-full font-bold">
             <Link href="/signup">{t('getStarted')}</Link>
           </Button>
         </nav>
@@ -57,7 +57,7 @@ export default function HomeComponent() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 min-[400px]:flex-row">
-                  <Button asChild size="lg" className="rounded-full text-base font-bold animate-glowing">
+                  <Button asChild size="lg" className="rounded-full text-base font-bold">
                     <Link href="/signup">
                       {t('signUpForFree')}
                       <ArrowRight className="ml-2 h-5 w-5" />
@@ -111,8 +111,8 @@ export default function HomeComponent() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
-              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg hover:-translate-y-2">
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 md:gap-12 lg:grid-cols-3" style={{ perspective: '1000px' }}>
+              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-2" style={{ transformStyle: 'preserve-3d' }}>
                 <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
                   <BarChart className="h-8 w-8 text-primary" />
                 </div>
@@ -121,7 +121,7 @@ export default function HomeComponent() {
                   {t('realtimeDashboardSubtitle')}
                 </p>
               </div>
-              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg hover:-translate-y-2">
+              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-2" style={{ transformStyle: 'preserve-3d' }}>
                  <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
                   <Bot className="h-8 w-8 text-primary" />
                 </div>
@@ -130,7 +130,7 @@ export default function HomeComponent() {
                   {t('aiChatAssistantSubtitle')}
                 </p>
               </div>
-              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg hover:-translate-y-2">
+              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-2" style={{ transformStyle: 'preserve-3d' }}>
                  <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
                   <ShieldAlert className="h-8 w-8 text-primary" />
                 </div>
