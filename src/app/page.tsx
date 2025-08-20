@@ -27,7 +27,7 @@ export default function HomeComponent() {
     { src: "https://i.ibb.co/j9TP7Jw6/Real-time-tdms.png", alt: "Real-time-tdms", hint: "dashboard ui" },
     { src: "https://i.ibb.co/Kp66qvPd/multiple-language-support.png", alt: "multiple-language-support", hint: "language support" },
     { src: "https://i.ibb.co/ynYNd5sn/ai-insights.jpg", alt: "ai-insights", hint: "ai insights" },
-    { src: "https://placehold.co/600x400.png", alt: "Warehouse with stacked goods", hint: "warehouse logistics" },
+    { src: "https://i.ibb.co/F4HC1FQc/alerts.jpg", alt: "alerts", hint: "alert notification" },
   ];
   
   React.useEffect(() => {
