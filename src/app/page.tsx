@@ -22,12 +22,12 @@ export default function HomeComponent() {
   const [count, setCount] = React.useState(0)
 
   const carouselImages = [
-    { src: "https://i.ibb.co/0ySs51QD/tdms-in-warehouse.png", alt: "tdms-in-warehouse", hint: "warehouse monitoring" },
-    { src: "https://i.ibb.co/R4b9qHCg/tdms-man-in-warehouse-with-equipment.png", alt: "tdms-man-in-warehouse-with-equipment", hint: "warehouse worker" },
-    { src: "https://i.ibb.co/j9TP7Jw6/Real-time-tdms.png", alt: "Real-time-tdms", hint: "dashboard ui" },
-    { src: "https://i.ibb.co/Kp66qvPd/multiple-language-support.png", alt: "multiple-language-support", hint: "language support" },
-    { src: "https://i.ibb.co/ynYNd5sn/ai-insights.jpg", alt: "ai-insights", hint: "ai insights" },
-    { src: "https://i.ibb.co/F4HC1FQc/alerts.jpg", alt: "alerts", hint: "alert notification" },
+    { src: "https://i.ibb.co/0ySs51QD/tdms-in-warehouse.png", alt: "tdms-in-warehouse", hint: "warehouse monitoring", text: "Smart Monitoring Made Simple" },
+    { src: "https://i.ibb.co/R4b9qHCg/tdms-man-in-warehouse-with-equipment.png", alt: "tdms-man-in-warehouse-with-equipment", hint: "warehouse worker", text: "Designed for Coffee Farmers, Built for Efficiency" },
+    { src: "https://i.ibb.co/j9TP7Jw6/Real-time-tdms.png", alt: "Real-time-tdms", hint: "dashboard ui", text: "Track Temperature, Humidity & Dust Instantly" },
+    { src: "https://i.ibb.co/Kp66qvPd/multiple-language-support.png", alt: "multiple-language-support", hint: "language support", text: "From Farm to Storage: Safeguarding Coffee Quality" },
+    { src: "https://i.ibb.co/ynYNd5sn/ai-insights.jpg", alt: "ai-insights", hint: "ai insights", text: "Predict. Prevent. Protect Your Coffee Storage." },
+    { src: "https://i.ibb.co/F4HC1FQc/alerts.jpg", alt: "alerts", hint: "alert notification", text: "Get Instant Alerts Before It’s Too Late" },
   ];
   
   React.useEffect(() => {
@@ -102,7 +102,7 @@ export default function HomeComponent() {
                     <CarouselContent>
                       {carouselImages.map((image, index) => (
                         <CarouselItem key={index}>
-                          <div className="p-1">
+                          <div className="p-1 relative">
                              <Image
                                 src={image.src}
                                 width="600"
@@ -111,6 +111,9 @@ export default function HomeComponent() {
                                 data-ai-hint={image.hint}
                                 className="mx-auto aspect-video overflow-hidden rounded-2xl object-cover"
                               />
+                              <div className="absolute inset-0 bg-black/20 rounded-2xl flex items-end p-6">
+                                <p className="text-white text-lg font-semibold" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>{image.text}</p>
+                              </div>
                           </div>
                         </CarouselItem>
                       ))}
