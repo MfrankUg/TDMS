@@ -23,6 +23,8 @@ export function useSensorData() {
   const [error, setError] = useState<Error | null>(null);
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
       const response = await fetch(API_URL);
       if (!response.ok) {
