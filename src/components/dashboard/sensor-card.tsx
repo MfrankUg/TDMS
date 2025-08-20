@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sensor } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface SensorCardProps {
   sensor: Sensor;
@@ -8,6 +9,7 @@ interface SensorCardProps {
 }
 
 export function SensorCard({ sensor, icon }: SensorCardProps) {
+  const { t } = useTranslation();
   const statusConfig = {
     normal: {
       color: "bg-green-500",
@@ -26,7 +28,7 @@ export function SensorCard({ sensor, icon }: SensorCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{sensor.name}</CardTitle>
+        <CardTitle className="text-sm font-medium">{t(sensor.id as any)}</CardTitle>
         {icon}
       </CardHeader>
       <CardContent>
@@ -40,7 +42,7 @@ export function SensorCard({ sensor, icon }: SensorCardProps) {
               statusConfig[sensor.status].color
             )}
           />
-          <span className={cn(statusConfig[sensor.status].text, "dark:text-white/70")}>{sensor.status.charAt(0).toUpperCase() + sensor.status.slice(1)}</span>
+          <span className={cn(statusConfig[sensor.status].text, "dark:text-white/70")}>{t(sensor.status as any)}</span>
         </div>
       </CardContent>
     </Card>

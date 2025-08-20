@@ -32,7 +32,7 @@ export function PredictiveAlerts({ sensorData }: PredictiveAlertsProps) {
       const input = {
         temperatureReadings: sensorData.find(s => s.id === 'temp')?.historicalData?.map(d => d.value) || [],
         humidityReadings: sensorData.find(s => s.id === 'humidity')?.historicalData?.map(d => d.value) || [],
-        dustParticleReadings: sensorData.find(s => s.id === 'dust')?.historicalData?.map(d => d.value) || [],
+        dustParticleReadings: sensorData.find(s => s.id === 'small_dust')?.historicalData?.map(d => d.value) || [],
         thresholdTemperature: 25,
         thresholdHumidity: 70,
         thresholdDustParticles: 200

@@ -51,11 +51,15 @@ export const translations = {
     logout: 'Logout',
     temp: 'Temperature',
     humidity: 'Humidity',
-    dust: 'Dust Particles',
+    small_dust: 'Small Dust Particles',
+    large_dust: 'Large Dust Particles',
     trend: 'Trend',
     last30Hours: 'Last 30 hours',
     contactUs: 'Contact Us',
-    followUs: 'Follow Us'
+    followUs: 'Follow Us',
+    normal: 'Normal',
+    warning: 'Warning',
+    danger: 'Danger'
   },
   sw: {
     login: 'Ingia',
@@ -109,11 +113,15 @@ export const translations = {
     logout: 'Toka',
     temp: 'Joto',
     humidity: 'Unyevu',
-    dust: 'Chembe za Vumbi',
+    small_dust: 'Chembe Ndogo za Vumbi',
+    large_dust: 'Chembe Kubwa za Vumbi',
     trend: 'Mwenendo',
     last30Hours: 'Saa 30 zilizopita',
     contactUs: 'Wasiliana Nasi',
-    followUs: 'Tufuate'
+    followUs: 'Tufuate',
+    normal: 'Kawaida',
+    warning: 'Onyo',
+    danger: 'Hatari'
   },
   lg: {
     login: 'Yingira',
@@ -167,11 +175,15 @@ export const translations = {
     logout: 'Fuluma',
     temp: 'Ebbugumu',
     humidity: 'Obunnyogovu',
-    dust: 'Obuntu bw’Enfuufu',
+    small_dust: 'Obuntu Obutono obw’Enfuufu',
+    large_dust: 'Obuntu Obunene obw’Enfuufu',
     trend: 'Omugendo',
     last30Hours: 'Essaawa 30 eziyise',
     contactUs: 'Twogerereko',
-    followUs: 'Tugoberere'
+    followUs: 'Tugoberere',
+    normal: 'Kya Bulijjo',
+    warning: 'Okulabula',
+    danger: 'Akabi'
   },
   ru: {
     login: 'Ingira',
@@ -225,11 +237,15 @@ export const translations = {
     logout: 'Sohoora',
     temp: 'Obwire',
     humidity: 'Obutote',
-    dust: 'Enfuufu',
+    small_dust: 'Obuntu Obutono obw’Enfuufu',
+    large_dust: 'Obuntu Obunene obw’Enfuufu',
     trend: 'Omulingo',
     last30Hours: 'Esaaha 30 ezihingwire',
     contactUs: 'Tugambireho',
-    followUs: 'Tukuratire'
+    followUs: 'Tukuratire',
+    normal: 'Kya Buliijo',
+    warning: 'Okwerinda',
+    danger: 'Akabi'
   },
 };
 
