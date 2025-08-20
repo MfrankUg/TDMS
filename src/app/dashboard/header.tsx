@@ -30,17 +30,17 @@ export function DashboardHeader() {
       <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
         <svg
           className="h-10 w-auto"
-          viewBox="0 0 200 40"
+          viewBox="0 0 170 40"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <text x="10" y="28" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="24" fontWeight="bold" fill="black" className="dark:fill-white">TDMS</text>
           <path
-            d="M140 20 C130 5, 160 5, 150 20 C160 35, 130 35, 140 20 Z"
+            d="M125 20 C115 5, 145 5, 135 20 C145 35, 115 35, 125 20 Z"
             fill="hsl(var(--primary))"
           />
           <path
-            d="M142 10 C147 15, 147 25, 142 30"
+            d="M127 10 C132 15, 132 25, 127 30"
             stroke="white"
             strokeWidth="2"
             fill="none"

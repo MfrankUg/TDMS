@@ -28,24 +28,23 @@ export default function HomeComponent() {
     <div className="flex flex-col min-h-screen bg-background font-body">
       <header className="px-4 lg:px-6 h-20 flex items-center bg-white/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
         <Link href="#" className="flex items-center justify-center">
-            <svg
-              className="h-12 w-auto"
-              viewBox="0 0 200 40"
+             <svg
+              className="h-10 w-auto"
+              viewBox="0 0 170 40"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <text x="10" y="28" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="24" fontWeight="bold" fill="black">TDMS</text>
               <path
-                d="M140 20 C130 5, 160 5, 150 20 C160 35, 130 35, 140 20 Z"
+                d="M125 20 C115 5, 145 5, 135 20 C145 35, 115 35, 125 20 Z"
                 fill="hsl(var(--primary))"
               />
               <path
-                d="M142 10 C147 15, 147 25, 142 30"
+                d="M127 10 C132 15, 132 25, 127 30"
                 stroke="white"
                 strokeWidth="2"
                 fill="none"
               />
-              <text x="10" y="38" fontFamily="Roboto, sans-serif" fontSize="6" fill="black">TEMPERATURE AND DUST MONITORING SYSTEM</text>
             </svg>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-8 items-center">
@@ -175,23 +174,22 @@ export default function HomeComponent() {
             <div className="flex flex-col gap-4 md:col-span-2">
               <Link href="#" className="flex items-center justify-start w-fit">
                  <svg
-                  className="h-12 w-auto"
-                  viewBox="0 0 200 40"
+                  className="h-10 w-auto"
+                  viewBox="0 0 170 40"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <text x="10" y="28" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="24" fontWeight="bold" fill="black">TDMS</text>
                   <path
-                    d="M140 20 C130 5, 160 5, 150 20 C160 35, 130 35, 140 20 Z"
+                    d="M125 20 C115 5, 145 5, 135 20 C145 35, 115 35, 125 20 Z"
                     fill="hsl(var(--primary))"
                   />
                   <path
-                    d="M142 10 C147 15, 147 25, 142 30"
+                    d="M127 10 C132 15, 132 25, 127 30"
                     stroke="white"
                     strokeWidth="2"
                     fill="none"
                   />
-                  <text x="10" y="38" fontFamily="Roboto, sans-serif" fontSize="6" fill="black">TEMPERATURE AND DUST MONITORING SYSTEM</text>
                 </svg>
               </Link>
               <p className="text-muted-foreground text-sm max-w-md">
