@@ -1,3 +1,4 @@
+
 export interface SensorDataPoint {
   time: string;
   value: number;
@@ -9,7 +10,7 @@ export interface Sensor {
   unit: string;
   currentValue: number;
   status: 'normal' | 'warning' | 'danger';
-  historicalData: SensorDataPoint[];
+  historicalData?: SensorDataPoint[];
 }
 
 export interface ChatMessage {

@@ -1,29 +1,38 @@
+
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { handlePrediction } from "@/lib/actions";
-import { mockSensors } from "@/lib/mock-data";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertTriangle, CheckCircle2, RefreshCw } from "lucide-react";
 import { PredictOutOfRangeOutput } from "@/ai/flows/predict-out-of-range";
 import { useTranslation } from "@/hooks/use-translation";
+import type { Sensor } from "@/lib/types";
 
-export function PredictiveAlerts() {
+
+interface PredictiveAlertsProps {
+  sensorData: Sensor[];
+}
+
+
+export function PredictiveAlerts({ sensorData }: PredictiveAlertsProps) {
   const [predictions, setPredictions] = useState<PredictOutOfRangeOutput | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation();
 
   const fetchPredictions = useCallback(async () => {
+    if (sensorData.length === 0) return;
+
     setIsLoading(true);
     setError(null);
     try {
       const input = {
-        temperatureReadings: mockSensors.find(s => s.id === 'temp')?.historicalData.map(d => d.value) || [],
-        humidityReadings: mockSensors.find(s => s.id === 'humidity')?.historicalData.map(d => d.value) || [],
-        dustParticleReadings: mockSensors.find(s => s.id === 'dust')?.historicalData.map(d => d.value) || [],
+        temperatureReadings: sensorData.find(s => s.id === 'temp')?.historicalData?.map(d => d.value) || [],
+        humidityReadings: sensorData.find(s => s.id === 'humidity')?.historicalData?.map(d => d.value) || [],
+        dustParticleReadings: sensorData.find(s => s.id === 'dust')?.historicalData?.map(d => d.value) || [],
         thresholdTemperature: 25,
         thresholdHumidity: 70,
         thresholdDustParticles: 200
@@ -36,7 +45,7 @@ export function PredictiveAlerts() {
     } finally {
       setIsLoading(false);
     }
-  }, [t]);
+  }, [t, sensorData]);
 
   useEffect(() => {
     fetchPredictions();
