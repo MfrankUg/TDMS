@@ -29,7 +29,6 @@ export default function HomeComponent() {
       <header className="px-4 lg:px-6 h-20 flex items-center bg-white/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
         <Link href="#" className="flex items-center justify-center gap-2">
              <span className="text-2xl font-bold text-black">TDMS</span>
-             <Image src="https://i.imgur.com/gC51m2v.png" alt="TDMS Logo" width="28" height="28" />
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-8 items-center">
           <Button variant="ghost" asChild>
@@ -158,7 +157,6 @@ export default function HomeComponent() {
             <div className="flex flex-col gap-4 md:col-span-2">
               <Link href="#" className="flex items-center justify-start w-fit gap-2">
                  <span className="text-2xl font-bold text-black">TDMS</span>
-                 <Image src="https://i.imgur.com/gC51m2v.png" alt="TDMS Logo" width="28" height="28" />
               </Link>
               <p className="text-muted-foreground text-sm max-w-md">
                 {t('heroSubtitle')}

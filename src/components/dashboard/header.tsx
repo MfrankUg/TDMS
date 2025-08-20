@@ -29,8 +29,7 @@ export function DashboardHeader() {
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-card px-4 md:px-6 z-10">
       <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl">
-        <span className="text-black hidden md:inline-block">TDMS</span>
-        <Image src="https://i.imgur.com/gC51m2v.png" alt="TDMS Logo" width="28" height="28" />
+        <span className="text-black">TDMS</span>
       </Link>
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
         <DropdownMenu>
