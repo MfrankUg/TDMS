@@ -229,10 +229,10 @@ export function SignupForm() {
                     Forgot password?
                  </Link>
             </div>
-             <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full">
               Sign Up
             </Button>
-             <div className="relative my-4">
+            <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
                 </div>
@@ -259,3 +259,5 @@ export function SignupForm() {
     </Card>
   );
 }
+
+    
