@@ -17,11 +17,11 @@ export default function HomeComponent() {
   const { t } = useTranslation();
 
   const carouselImages = [
-    { src: "https://placehold.co/600x600.png", alt: "Coffee beans in a sack", hint: "coffee beans" },
-    { src: "https://placehold.co/600x600.png", alt: "Modern warehouse interior", hint: "warehouse interior" },
-    { src: "https://placehold.co/600x600.png", alt: "Person checking coffee plants", hint: "coffee farm" },
-    { src: "https://placehold.co/600x600.png", alt: "Close up of green coffee beans", hint: "green coffee" },
-    { src: "https://placehold.co/600x600.png", alt: "Warehouse with stacked goods", hint: "warehouse logistics" },
+    { src: "https://placehold.co/1200x600.png", alt: "Coffee beans in a sack", hint: "coffee beans" },
+    { src: "https://placehold.co/1200x600.png", alt: "Modern warehouse interior", hint: "warehouse interior" },
+    { src: "https://placehold.co/1200x600.png", alt: "Person checking coffee plants", hint: "coffee farm" },
+    { src: "https://placehold.co/1200x600.png", alt: "Close up of green coffee beans", hint: "green coffee" },
+    { src: "https://placehold.co/1200x600.png", alt: "Warehouse with stacked goods", hint: "warehouse logistics" },
   ];
 
   return (
@@ -76,7 +76,7 @@ export default function HomeComponent() {
                         stopOnInteraction: false,
                       }),
                     ]}
-                    className="w-full max-w-md"
+                    className="w-full max-w-lg"
                   >
                     <CarouselContent>
                       {carouselImages.map((image, index) => (
@@ -84,11 +84,11 @@ export default function HomeComponent() {
                           <div className="p-1">
                              <Image
                                 src={image.src}
-                                width="600"
+                                width="1200"
                                 height="600"
                                 alt={image.alt}
                                 data-ai-hint={image.hint}
-                                className="mx-auto aspect-square overflow-hidden rounded-2xl object-cover"
+                                className="mx-auto aspect-video overflow-hidden rounded-2xl object-cover"
                               />
                           </div>
                         </CarouselItem>
