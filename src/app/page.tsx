@@ -27,25 +27,21 @@ export default function HomeComponent() {
   return (
     <div className="flex flex-col min-h-screen bg-background font-body">
       <header className="px-4 lg:px-6 h-20 flex items-center bg-white/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
-        <Link href="#" className="flex items-center justify-center">
+        <Link href="#" className="flex items-center justify-center gap-2">
              <svg
-              className="h-10 w-auto"
-              viewBox="0 0 170 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <text x="10" y="28" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="24" fontWeight="bold" fill="black">TDMS</text>
-              <path
-                d="M125 20 C115 5, 145 5, 135 20 C145 35, 115 35, 125 20 Z"
-                fill="hsl(var(--primary))"
-              />
-              <path
-                d="M127 10 C132 15, 132 25, 127 30"
-                stroke="white"
-                strokeWidth="2"
+                className="h-7 w-7 text-primary"
+                viewBox="0 0 24 24"
                 fill="none"
-              />
-            </svg>
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12.63,21.55C17.7,20.07,21.23,15.89,20.9,10.94C20.57,6,16.88,2.2,11.95,2.05C7.03,1.9,2.87,5.5,2.37,10.42C1.86,15.34,5.4,19.64,10.37,20.73" stroke="currentColor" strokeWidth="1.5"></path>
+                <path d="M15.42,5.83C14.86,8.2,13.33,11.66,10.51,14.54" stroke="currentColor" strokeWidth="1.5"></path>
+              </svg>
+             <span className="text-2xl font-bold text-black">TDMS</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-8 items-center">
           <Button variant="ghost" asChild>
@@ -172,25 +168,21 @@ export default function HomeComponent() {
         <div className="container mx-auto py-12 px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex flex-col gap-4 md:col-span-2">
-              <Link href="#" className="flex items-center justify-start w-fit">
+              <Link href="#" className="flex items-center justify-start w-fit gap-2">
                  <svg
-                  className="h-10 w-auto"
-                  viewBox="0 0 170 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <text x="10" y="28" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="24" fontWeight="bold" fill="black">TDMS</text>
-                  <path
-                    d="M125 20 C115 5, 145 5, 135 20 C145 35, 115 35, 125 20 Z"
-                    fill="hsl(var(--primary))"
-                  />
-                  <path
-                    d="M127 10 C132 15, 132 25, 127 30"
-                    stroke="white"
-                    strokeWidth="2"
+                    className="h-7 w-7 text-primary"
+                    viewBox="0 0 24 24"
                     fill="none"
-                  />
-                </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12.63,21.55C17.7,20.07,21.23,15.89,20.9,10.94C20.57,6,16.88,2.2,11.95,2.05C7.03,1.9,2.87,5.5,2.37,10.42C1.86,15.34,5.4,19.64,10.37,20.73" stroke="currentColor" strokeWidth="1.5"></path>
+                    <path d="M15.42,5.83C14.86,8.2,13.33,11.66,10.51,14.54" stroke="currentColor" strokeWidth="1.5"></path>
+                  </svg>
+                 <span className="text-2xl font-bold text-black">TDMS</span>
               </Link>
               <p className="text-muted-foreground text-sm max-w-md">
                 {t('heroSubtitle')}
@@ -234,3 +226,5 @@ export default function HomeComponent() {
     </div>
   );
 }
+
+    
