@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Bot, BarChart, ShieldAlert, Mail, Phone, Twitter, Linkedin, Facebook } from 'lucide-react';
+import { ArrowRight, Bot, BarChart, ShieldAlert, Mail, Phone, Twitter, Linkedin, Facebook, Languages } from 'lucide-react';
 import Image from 'next/image';
 import { useTranslation } from '@/hooks/use-translation';
 import {
@@ -111,7 +111,7 @@ export default function HomeComponent() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 md:gap-12 lg:grid-cols-3" style={{ perspective: '1000px' }}>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 md:gap-12 lg:grid-cols-2">
               <div className="grid gap-4 text-center p-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-2" style={{ transformStyle: 'preserve-3d' }}>
                 <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
                   <BarChart className="h-8 w-8 text-primary" />
@@ -137,6 +137,15 @@ export default function HomeComponent() {
                 <h3 className="text-2xl font-bold font-headline">{t('predictiveAlertingTitle')}</h3>
                 <p className="text-muted-foreground">
                   {t('predictiveAlertingSubtitle')}
+                </p>
+              </div>
+               <div className="grid gap-4 text-center p-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-2" style={{ transformStyle: 'preserve-3d' }}>
+                 <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
+                  <Languages className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold font-headline">{t('multiLanguageVoiceAssistantTitle')}</h3>
+                <p className="text-muted-foreground">
+                  {t('multiLanguageVoiceAssistantSubtitle')}
                 </p>
               </div>
             </div>
