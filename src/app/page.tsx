@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Bot, BarChart, ShieldAlert, Mail, Phone, Twitter, Linkedin, Facebook, Languages } from 'lucide-react';
 import Image from 'next/image';
@@ -9,20 +10,38 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 
 
 export default function HomeComponent() {
   const { t } = useTranslation();
+  const [api, setApi] = React.useState<CarouselApi>()
+  const [current, setCurrent] = React.useState(0)
+  const [count, setCount] = React.useState(0)
 
   const carouselImages = [
-    { src: "https://placehold.co/1200x600.png", alt: "Coffee beans in a sack", hint: "coffee beans" },
-    { src: "https://placehold.co/1200x600.png", alt: "Modern warehouse interior", hint: "warehouse interior" },
-    { src: "https://placehold.co/1200x600.png", alt: "Person checking coffee plants", hint: "coffee farm" },
-    { src: "https://placehold.co/1200x600.png", alt: "Close up of green coffee beans", hint: "green coffee" },
-    { src: "https://placehold.co/1200x600.png", alt: "Warehouse with stacked goods", hint: "warehouse logistics" },
+    { src: "https://placehold.co/600x600.png", alt: "Coffee beans in a sack", hint: "coffee beans" },
+    { src: "https://placehold.co/600x600.png", alt: "Modern warehouse interior", hint: "warehouse interior" },
+    { src: "https://placehold.co/600x600.png", alt: "Person checking coffee plants", hint: "coffee farm" },
+    { src: "https://placehold.co/600x600.png", alt: "Close up of green coffee beans", hint: "green coffee" },
+    { src: "https://placehold.co/600x600.png", alt: "Warehouse with stacked goods", hint: "warehouse logistics" },
   ];
+  
+  React.useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    setCount(api.scrollSnapList().length)
+    setCurrent(api.selectedScrollSnap())
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap())
+    })
+  }, [api])
+
 
   return (
     <div className="flex flex-col min-h-screen bg-background font-body">
@@ -64,8 +83,9 @@ export default function HomeComponent() {
                   </Button>
                 </div>
               </div>
-              <div className="flex items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
                  <Carousel
+                    setApi={setApi}
                     opts={{
                       align: "start",
                       loop: true,
@@ -76,7 +96,7 @@ export default function HomeComponent() {
                         stopOnInteraction: false,
                       }),
                     ]}
-                    className="w-full max-w-lg"
+                    className="w-full max-w-md"
                   >
                     <CarouselContent>
                       {carouselImages.map((image, index) => (
@@ -84,17 +104,28 @@ export default function HomeComponent() {
                           <div className="p-1">
                              <Image
                                 src={image.src}
-                                width="1200"
+                                width="600"
                                 height="600"
                                 alt={image.alt}
                                 data-ai-hint={image.hint}
-                                className="mx-auto aspect-video overflow-hidden rounded-2xl object-cover"
+                                className="mx-auto aspect-square overflow-hidden rounded-2xl object-cover"
                               />
                           </div>
                         </CarouselItem>
                       ))}
                     </CarouselContent>
                   </Carousel>
+                  <div className="flex items-center justify-center gap-2 mt-4">
+                    {Array.from({ length: count }).map((_, i) => (
+                        <Button
+                          key={i}
+                          variant="ghost"
+                          size="icon"
+                          className={`h-2 w-2 rounded-full p-0 ${ i === current ? 'bg-primary' : 'bg-primary/20'}`}
+                          onClick={() => api?.scrollTo(i)}
+                        />
+                    ))}
+                  </div>
               </div>
             </div>
           </div>
