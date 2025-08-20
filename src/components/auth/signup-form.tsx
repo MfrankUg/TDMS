@@ -126,7 +126,7 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} />
+                    <Input type="email" placeholder="you@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +163,7 @@ export function SignupForm() {
                     render={({ field }) => (
                         <FormItem className="w-2/3">
                         <FormControl>
-                            <Input placeholder="700 *** ***" {...field} />
+                            <Input type="tel" pattern="[0-9\s]+" placeholder="700 *** ***" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
