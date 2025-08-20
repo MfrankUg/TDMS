@@ -147,10 +147,10 @@ export function SignupForm() {
                             </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                                <SelectItem value="+256">UG (+256)</SelectItem>
-                                <SelectItem value="+254">KE (+254)</SelectItem>
-                                <SelectItem value="+255">TZ (+255)</SelectItem>
-                                <SelectItem value="+1">US (+1)</SelectItem>
+                                <SelectItem value="+256">🇺🇬 UG (+256)</SelectItem>
+                                <SelectItem value="+254">🇰🇪 KE (+254)</SelectItem>
+                                <SelectItem value="+255">🇹🇿 TZ (+255)</SelectItem>
+                                <SelectItem value="+1">🇺🇸 US (+1)</SelectItem>
                             </SelectContent>
                         </Select>
                         <FormMessage />
@@ -163,7 +163,7 @@ export function SignupForm() {
                     render={({ field }) => (
                         <FormItem className="w-2/3">
                         <FormControl>
-                            <Input placeholder="750 631 973" {...field} />
+                            <Input placeholder="700 *** ***" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
