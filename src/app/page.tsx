@@ -102,7 +102,7 @@ export default function HomeComponent() {
                     <CarouselContent>
                       {carouselImages.map((image, index) => (
                         <CarouselItem key={index}>
-                          <div className="p-1 relative">
+                          <div className="relative">
                              <Image
                                 src={image.src}
                                 width="600"
