@@ -5,8 +5,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/lib/language';
 
 export const metadata: Metadata = {
-  title: 'TDMS - Temperature and Dust monitoring System',
-  description: 'Monitor your environment with AI-powered insights.',
+  title: 'TDMS - Coffee Storage Monitoring',
+  description: 'Monitor your coffee storage environment with AI-powered insights.',
 };
 
 export default function RootLayout({
