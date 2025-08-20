@@ -22,11 +22,11 @@ export default function HomeComponent() {
   const [count, setCount] = React.useState(0)
 
   const carouselImages = [
-    { src: "https://i.ibb.co/0ySs51QD/tdms-in-warehouse.png", alt: "TDMS in warehouse", hint: "warehouse monitoring" },
-    { src: "https://i.ibb.co/R4b9qHCg/tdms-man-in-warehouse-with-equipment.png", alt: "Man in warehouse with TDMS equipment", hint: "warehouse worker" },
-    { src: "https://i.ibb.co/j9TP7Jw6/Real-time-tdms.png", alt: "Real-time TDMS dashboard", hint: "dashboard ui" },
-    { src: "https://placehold.co/600x400.png", alt: "Person checking coffee plants", hint: "coffee farm" },
-    { src: "https://placehold.co/600x400.png", alt: "Close up of green coffee beans", hint: "green coffee" },
+    { src: "https://i.ibb.co/0ySs51QD/tdms-in-warehouse.png", alt: "tdms-in-warehouse", hint: "warehouse monitoring" },
+    { src: "https://i.ibb.co/R4b9qHCg/tdms-man-in-warehouse-with-equipment.png", alt: "tdms-man-in-warehouse-with-equipment", hint: "warehouse worker" },
+    { src: "https://i.ibb.co/j9TP7Jw6/Real-time-tdms.png", alt: "Real-time-tdms", hint: "dashboard ui" },
+    { src: "https://i.ibb.co/Kp66qvPd/multiple-language-support.png", alt: "multiple-language-support", hint: "language support" },
+    { src: "https://i.ibb.co/ynYNd5sn/ai-insights.jpg", alt: "ai-insights", hint: "ai insights" },
     { src: "https://placehold.co/600x400.png", alt: "Warehouse with stacked goods", hint: "warehouse logistics" },
   ];
   
