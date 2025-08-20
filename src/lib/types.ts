@@ -5,7 +5,7 @@ export interface SensorDataPoint {
 }
 
 export interface Sensor {
-  id: string;
+  id: 'temp' | 'humidity' | 'small_dust' | 'large_dust';
   name: string;
   unit: string;
   currentValue: number;
