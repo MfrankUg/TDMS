@@ -112,7 +112,7 @@ export default function HomeComponent() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
-              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg">
+              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg hover:-translate-y-2">
                 <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
                   <BarChart className="h-8 w-8 text-primary" />
                 </div>
@@ -121,7 +121,7 @@ export default function HomeComponent() {
                   {t('realtimeDashboardSubtitle')}
                 </p>
               </div>
-              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg">
+              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg hover:-translate-y-2">
                  <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
                   <Bot className="h-8 w-8 text-primary" />
                 </div>
@@ -130,7 +130,7 @@ export default function HomeComponent() {
                   {t('aiChatAssistantSubtitle')}
                 </p>
               </div>
-              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg">
+              <div className="grid gap-4 text-center p-6 rounded-2xl transition-all hover:bg-white hover:shadow-lg hover:-translate-y-2">
                  <div className="flex justify-center items-center h-16 w-16 bg-primary/10 rounded-full mx-auto">
                   <ShieldAlert className="h-8 w-8 text-primary" />
                 </div>
