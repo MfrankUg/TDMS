@@ -31,6 +31,7 @@ import { ShieldCheck } from "lucide-react";
 const formSchema = z.object({
   fullName: z.string().min(1, { message: "Full name is required." }),
   email: z.string().email({ message: "Please enter a valid email." }),
+  countryCode: z.string().min(1, { message: "Please select a country code." }),
   telephone: z.string().min(1, { message: "Telephone number is required." }),
   role: z.string().min(1, { message: "Please select a role." }),
   password: z.string()
@@ -80,6 +81,7 @@ export function SignupForm() {
     defaultValues: {
       fullName: "",
       email: "",
+      countryCode: "+256",
       telephone: "",
       role: "",
       password: "",
@@ -130,19 +132,45 @@ export function SignupForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="telephone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Telephone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your telephone number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+             <FormItem>
+                <FormLabel>Telephone</FormLabel>
+                <div className="flex gap-2">
+                    <FormField
+                    control={form.control}
+                    name="countryCode"
+                    render={({ field }) => (
+                        <FormItem className="w-1/3">
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Code" />
+                            </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                                <SelectItem value="+256">UG (+256)</SelectItem>
+                                <SelectItem value="+254">KE (+254)</SelectItem>
+                                <SelectItem value="+255">TZ (+255)</SelectItem>
+                                <SelectItem value="+1">US (+1)</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                    control={form.control}
+                    name="telephone"
+                    render={({ field }) => (
+                        <FormItem className="w-2/3">
+                        <FormControl>
+                            <Input placeholder="750 631 973" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                </div>
+            </FormItem>
              <FormField
               control={form.control}
               name="role"
@@ -201,25 +229,26 @@ export function SignupForm() {
                     Forgot password?
                  </Link>
             </div>
-            <Button type="submit" className="w-full">
+             <Button type="submit" className="w-full">
               Sign Up
+            </Button>
+             <div className="relative my-4">
+                <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">
+                    Or continue with
+                </span>
+                </div>
+            </div>
+            <Button variant="outline" className="w-full">
+                <GoogleIcon className="mr-2 h-5 w-5" />
+                Continue with Google
             </Button>
           </form>
         </Form>
-        <div className="relative my-4">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">
-                Or continue with
-              </span>
-            </div>
-        </div>
-        <Button variant="outline" className="w-full">
-            <GoogleIcon className="mr-2 h-5 w-5" />
-            Continue with Google
-        </Button>
+       
         <div className="mt-4 text-center text-sm">
           {t('alreadyHaveAccount')}{" "}
           <Link href="/login" className="underline hover:text-primary">
