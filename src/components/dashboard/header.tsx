@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,16 +29,8 @@ export function DashboardHeader() {
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-card px-4 md:px-6 z-10">
       <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl">
-        <svg
-          className="h-7 w-auto text-primary"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M12.63,21.55C17.7,20.07,21.23,15.89,20.9,10.94C20.57,6,16.88,2.2,11.95,2.05C7.03,1.9,2.87,5.5,2.37,10.42C1.86,15.34,5.4,19.64,10.37,20.73" fill="hsl(var(--primary))" stroke="none"></path>
-          <path d="M15.42,5.83C14.86,8.2,13.33,11.66,10.51,14.54" stroke="hsl(var(--background))" strokeWidth="1.5"></path>
-        </svg>
         <span className="text-black hidden md:inline-block">TDMS</span>
+        <Image src="https://i.imgur.com/k91z3tB.png" alt="TDMS Logo" width="28" height="28" />
       </Link>
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
         <DropdownMenu>
