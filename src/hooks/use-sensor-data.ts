@@ -10,8 +10,8 @@ function getStatus(type: 'temp' | 'humidity' | 'small_dust' | 'large_dust', valu
   const thresholds = {
     temp: { warning: 25, danger: 30 },
     humidity: { warning: 75, danger: 80 },
-    small_dust: { warning: 1, danger: 2 },
-    large_dust: { warning: 1, danger: 2 },
+    small_dust: { warning: 30, danger: 50 },
+    large_dust: { warning: 30, danger: 50 },
   };
   if (value >= thresholds[type].danger) return 'danger';
   if (value >= thresholds[type].warning) return 'warning';
