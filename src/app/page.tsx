@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Bot, BarChart, ShieldAlert } from 'lucide-react';
+import { ArrowRight, Bot, BarChart, ShieldAlert, Mail, Phone, Twitter, Linkedin, Facebook } from 'lucide-react';
 import Image from 'next/image';
 import { useTranslation } from '@/hooks/use-translation';
 import {
@@ -143,16 +143,52 @@ export default function HomeComponent() {
           </div>
         </section>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-sm text-muted-foreground">&copy; 2024 TDMS. {t('allRightsReserved')}</p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link href="#" className="text-sm hover:underline underline-offset-4">
-            {t('termsOfService')}
-          </Link>
-          <Link href="#" className="text-sm hover:underline underline-offset-4">
-            {t('privacy')}
-          </Link>
-        </nav>
+      <footer className="bg-gray-50/50 border-t">
+        <div className="container mx-auto py-12 px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="flex flex-col gap-4 md:col-span-2">
+              <Link href="#" className="flex items-center justify-start font-bold text-xl font-headline w-fit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                <span className="ml-3">TDMS</span>
+              </Link>
+              <p className="text-muted-foreground text-sm max-w-md">
+                {t('heroSubtitle')}
+              </p>
+            </div>
+            <div>
+              <h4 className="font-headline font-bold text-lg mb-4">{t('contactUs')}</h4>
+              <div className="flex flex-col gap-3">
+                <a href="mailto:tdms256@gmail.com" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors w-fit">
+                  <Mail className="h-4 w-4" />
+                  <span>tdms256@gmail.com</span>
+                </a>
+                <a href="tel:+256750631973" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors w-fit">
+                  <Phone className="h-4 w-4" />
+                  <span>+256 750 631 973</span>
+                </a>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-headline font-bold text-lg mb-4">{t('followUs')}</h4>
+              <div className="flex gap-4">
+                <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitter className="h-6 w-6" /></Link>
+                <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Facebook className="h-6 w-6" /></Link>
+                <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Linkedin className="h-6 w-6" /></Link>
+              </div>
+            </div>
+          </div>
+          <div className="border-t mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-sm text-muted-foreground">&copy; 2024 TDMS. {t('allRightsReserved')}</p>
+            <nav className="flex gap-4 sm:gap-6 mt-4 sm:mt-0">
+              <Link href="#" className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline">
+                {t('termsOfService')}
+              </Link>
+              <Link href="#" className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline">
+                {t('privacy')}
+              </Link>
+            </nav>
+          </div>
+        </div>
       </footer>
     </div>
   );

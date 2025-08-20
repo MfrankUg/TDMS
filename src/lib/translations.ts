@@ -51,7 +51,9 @@ export const translations = {
     humidity: 'Humidity',
     dust: 'Dust Particles',
     trend: 'Trend',
-    last30Hours: 'Last 30 hours'
+    last30Hours: 'Last 30 hours',
+    contactUs: 'Contact Us',
+    followUs: 'Follow Us'
   },
   sw: {
     login: 'Ingia',
@@ -105,7 +107,9 @@ export const translations = {
     humidity: 'Unyevu',
     dust: 'Chembe za Vumbi',
     trend: 'Mwenendo',
-    last30Hours: 'Saa 30 zilizopita'
+    last30Hours: 'Saa 30 zilizopita',
+    contactUs: 'Wasiliana Nasi',
+    followUs: 'Tufuate'
   },
   lg: {
     login: 'Yingira',
@@ -159,7 +163,9 @@ export const translations = {
     humidity: 'Obunnyogovu',
     dust: 'Obuntu bw’Enfuufu',
     trend: 'Omugendo',
-    last30Hours: 'Essaawa 30 eziyise'
+    last30Hours: 'Essaawa 30 eziyise',
+    contactUs: 'Twogerereko',
+    followUs: 'Tugoberere'
   },
   ru: {
     login: 'Ingira',
@@ -213,7 +219,9 @@ export const translations = {
     humidity: 'Obutote',
     dust: 'Enfuufu',
     trend: 'Omulingo',
-    last30Hours: 'Esaaha 30 ezihingwire'
+    last30Hours: 'Esaaha 30 ezihingwire',
+    contactUs: 'Tugambireho',
+    followUs: 'Tukuratire'
   },
 };
 
