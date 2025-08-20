@@ -29,17 +29,13 @@ export default function HomeComponent() {
       <header className="px-4 lg:px-6 h-20 flex items-center bg-white/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
         <Link href="#" className="flex items-center justify-center gap-2">
              <svg
-                className="h-7 w-7 text-primary"
+                className="h-7 w-auto text-primary"
                 viewBox="0 0 24 24"
-                fill="none"
+                fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
               >
-                <path d="M12.63,21.55C17.7,20.07,21.23,15.89,20.9,10.94C20.57,6,16.88,2.2,11.95,2.05C7.03,1.9,2.87,5.5,2.37,10.42C1.86,15.34,5.4,19.64,10.37,20.73" stroke="currentColor" strokeWidth="1.5"></path>
-                <path d="M15.42,5.83C14.86,8.2,13.33,11.66,10.51,14.54" stroke="currentColor" strokeWidth="1.5"></path>
+                <path d="M12.63,21.55C17.7,20.07,21.23,15.89,20.9,10.94C20.57,6,16.88,2.2,11.95,2.05C7.03,1.9,2.87,5.5,2.37,10.42C1.86,15.34,5.4,19.64,10.37,20.73" fill="hsl(var(--primary))" stroke="none"></path>
+                <path d="M15.42,5.83C14.86,8.2,13.33,11.66,10.51,14.54" stroke="hsl(var(--background))" strokeWidth="1.5"></path>
               </svg>
              <span className="text-2xl font-bold text-black">TDMS</span>
         </Link>
@@ -170,17 +166,13 @@ export default function HomeComponent() {
             <div className="flex flex-col gap-4 md:col-span-2">
               <Link href="#" className="flex items-center justify-start w-fit gap-2">
                  <svg
-                    className="h-7 w-7 text-primary"
+                    className="h-7 w-auto text-primary"
                     viewBox="0 0 24 24"
-                    fill="none"
+                    fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
                   >
-                    <path d="M12.63,21.55C17.7,20.07,21.23,15.89,20.9,10.94C20.57,6,16.88,2.2,11.95,2.05C7.03,1.9,2.87,5.5,2.37,10.42C1.86,15.34,5.4,19.64,10.37,20.73" stroke="currentColor" strokeWidth="1.5"></path>
-                    <path d="M15.42,5.83C14.86,8.2,13.33,11.66,10.51,14.54" stroke="currentColor" strokeWidth="1.5"></path>
+                    <path d="M12.63,21.55C17.7,20.07,21.23,15.89,20.9,10.94C20.57,6,16.88,2.2,11.95,2.05C7.03,1.9,2.87,5.5,2.37,10.42C1.86,15.34,5.4,19.64,10.37,20.73" fill="hsl(var(--primary))" stroke="none"></path>
+                    <path d="M15.42,5.83C14.86,8.2,13.33,11.66,10.51,14.54" stroke="hsl(var(--background))" strokeWidth="1.5"></path>
                   </svg>
                  <span className="text-2xl font-bold text-black">TDMS</span>
               </Link>
@@ -226,5 +218,3 @@ export default function HomeComponent() {
     </div>
   );
 }
-
-    
