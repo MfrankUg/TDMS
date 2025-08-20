@@ -37,7 +37,7 @@ export default function HomeComponent() {
               {t('login')}
             </Link>
           </Button>
-          <Button asChild size="lg" className="rounded-full font-bold">
+          <Button asChild size="lg" className="rounded-full font-bold animate-glowing">
             <Link href="/signup">{t('getStarted')}</Link>
           </Button>
         </nav>
@@ -57,7 +57,7 @@ export default function HomeComponent() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 min-[400px]:flex-row">
-                  <Button asChild size="lg" className="rounded-full text-base font-bold">
+                  <Button asChild size="lg" className="rounded-full text-base font-bold animate-glowing">
                     <Link href="/signup">
                       {t('signUpForFree')}
                       <ArrowRight className="ml-2 h-5 w-5" />
