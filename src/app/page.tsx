@@ -52,7 +52,7 @@ export default function HomeComponent() {
              <span className="text-2xl font-bold text-black">TDMS</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-8 items-center">
-          <Button variant="ghost" asChild className="hover:bg-transparent">
+          <Button variant="ghost" asChild>
             <Link href="/login" className="text-base font-bold text-foreground/70">
               {t('login')}
             </Link>
