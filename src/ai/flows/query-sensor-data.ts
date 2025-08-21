@@ -1,4 +1,3 @@
-// This file is machine-generated - edit at your own risk!
 
 'use server';
 
@@ -30,7 +29,7 @@ const QuerySensorDataOutputSchema = z.object({
     .string()
     .optional()
     .describe(
-      'The answer converted to audio as a data URI. Expected format: \'data:audio/wav;base64,<encoded_data>\'.'
+      "The answer converted to audio as a data URI. Expected format: 'data:audio/wav;base64,<encoded_data>'."
     ),
 });
 export type QuerySensorDataOutput = z.infer<typeof QuerySensorDataOutputSchema>;
@@ -42,7 +41,7 @@ export async function querySensorData(input: QuerySensorDataInput): Promise<Quer
 const getSensorData = ai.defineTool(
   {
     name: 'getSensorData',
-    description: 'Retrieves sensor data for coffee storage from the data store.',
+    description: 'Retrieves current or historical sensor data for coffee storage from the data store, such as temperature, humidity, or dust levels.',
     inputSchema: z.object({
       dataType: z
         .string()
@@ -51,17 +50,27 @@ const getSensorData = ai.defineTool(
         ),
       timeRange: z
         .string()
+        .optional()
         .describe(
-          'The time range for which to retrieve the data (e.g., last hour, last day, last week).'
+          'The time range for which to retrieve the data (e.g., last hour, last day, last week, today vs yesterday). If not specified, returns current data.'
         ),
     }),
     outputSchema: z.string().describe('The sensor data in JSON format.'),
   },
   async input => {
-    // TODO: Implement the actual data retrieval logic here
-    // This is a placeholder. Replace with actual data retrieval from Firestore.
-    console.log('Getting sensor data: ' + JSON.stringify(input));
-    return `{\"temperature\": 25, \"humidity\": 60, \"dustParticles\": 100}`;
+    // This is a placeholder. In a real application, you would fetch this data from your database (e.g., Firestore).
+    console.log('Tool: Getting sensor data for ' + JSON.stringify(input));
+    // For demonstration, we'll return mock data based on the query.
+    if (input.dataType.includes('temp')) {
+      return JSON.stringify({ temperature: 24.6, unit: "°C", status: "within the safe storage range" });
+    }
+    if (input.dataType.includes('humid')) {
+       return JSON.stringify({ humidity: 63, unit: "%", status: "within the recommended range" });
+    }
+    if (input.dataType.includes('dust')) {
+       return JSON.stringify({ dust: 38, unit: "µg/m³", status: "acceptable" });
+    }
+    return JSON.stringify({ temperature: 25.2, humidity: 62, dust: 40 });
   }
 );
 
@@ -71,18 +80,43 @@ const prompt = ai.definePrompt({
   input: {schema: QuerySensorDataInputSchema},
   output: {schema: z.object({answer: z.string()})},
   prompt: `You are an AI assistant expert in coffee storage, helping users understand their sensor data in a coffee warehouse.
-  Ideal conditions for green coffee bean storage are:
-  - Temperature: 15-25°C (60-77°F)
-  - Humidity: 55-65%
-  - Low dust/contaminants.
 
-  {{#if userName}}
-  Start your response with a friendly greeting to the user, "{{userName}}".
-  {{/if}}
+  **Your Knowledge Base:**
+
+  *   **Ideal Conditions for Green Coffee Beans:**
+      *   Temperature: 20-25°C (68-77°F).
+      *   Humidity: 60-65%.
+      *   Low dust/contaminants.
   
-  Use the available tools to answer questions about sensor data trends and anomalies related to coffee storage.
-  If the user asks about a specific sensor data type or time range, use the getSensorData tool to retrieve the data.
-  Provide friendly, conversational, and helpful answers.
+  *   **Question Categories You Can Handle:**
+      *   **Current Readings:** "What is the temperature?" - Use the getSensorData tool.
+      *   **Alerts & Warnings:** "Are there any high temperature alerts?" - Answer based on ideal conditions.
+      *   **Predictions & Trends:** "What will the humidity be like in the next few hours?" - Note: Your current capability is to report on past trends, not predict the future. You can state what the trend has been.
+      *   **Storage & Coffee Quality Advice:** "What happens if humidity is too high?" - Use your expert knowledge.
+      *   **System Status:** "Are the sensors working?" - You can confirm you are receiving data.
+
+  **How to Answer:**
+
+  1.  **Greet the User:** If a \`userName\` is provided, start your response with a friendly greeting (e.g., "Hello {{userName}},").
+  2.  **Understand the Question:** Analyze the user's query to determine the category.
+  3.  **Use Tools When Necessary:** If the user asks for specific, real-time data (like "what is the temperature now?" or "show me the humidity trend for the last day"), you MUST use the \`getSensorData\` tool.
+  4.  **Use Your Knowledge:** For general questions about coffee storage best practices, advice, or what-if scenarios (e.g., "How can I reduce dust?"), answer directly from your knowledge base. You do not need a tool for this.
+  5.  **Be Conversational:** Provide friendly, clear, and helpful answers.
+
+  **Example Interactions:**
+  *   **User:** "What is the current dust level?"
+  *   **You (Action):** Call \`getSensorData\` with \`dataType: 'dust'\`.
+  *   **You (Response):** "The current dust concentration is 38 µg/m³, which is acceptable."
+
+  *   **User:** "What is the best temperature for my coffee?"
+  *   **You (Action):** Do not use a tool.
+  *   **You (Response):** "The ideal temperature for storing green coffee beans is between 20°C and 25°C to maintain maximum freshness."
+
+  *   **User:** "Is the humidity okay?"
+  *   **You (Action):** Call \`getSensorData\` with \`dataType: 'humidity'\`.
+  *   **You (Response):** "Yes, the humidity is currently at 63%, which is perfectly within the recommended range of 60-65%."
+
+  ---
 
   User question: {{{query}}}`,
 });

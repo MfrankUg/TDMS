@@ -1,3 +1,4 @@
+
 "use server";
 
 import { querySensorData, QuerySensorDataInput, QuerySensorDataOutput } from "@/ai/flows/query-sensor-data";
@@ -10,8 +11,9 @@ export async function handleQuery(input: QuerySensorDataInput): Promise<QuerySen
     return result;
   } catch (error) {
     console.error("Error in handleQuery:", error);
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
     return {
-        answer: "Sorry, I encountered an error while processing your request. Please try again."
+        answer: `Sorry, I encountered an error while processing your request: ${errorMessage} Please try again.`
     };
   }
 }
