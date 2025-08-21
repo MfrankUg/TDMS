@@ -33,13 +33,21 @@ export function useNotifications() {
     }
 
     const smallDustSensor = sensors.find(s => s.id === 'small_dust');
-    const largeDustSensor = sensors.find(s => s.id === 'large_dust');
-    if ((smallDustSensor && (smallDustSensor.status === 'danger' || smallDustSensor.status === 'warning')) ||
-        (largeDustSensor && (largeDustSensor.status === 'danger' || largeDustSensor.status === 'warning'))) {
+    if (smallDustSensor && (smallDustSensor.status === 'danger' || smallDustSensor.status === 'warning')) {
       notifications.push({
         title: t('highDust'),
         description: t('highDustDesc'),
       });
+    }
+    
+    const largeDustSensor = sensors.find(s => s.id === 'large_dust');
+    if (largeDustSensor && (largeDustSensor.status === 'danger' || largeDustSensor.status === 'warning')) {
+      if(!notifications.find(n => n.title === t('highDust'))) {
+        notifications.push({
+          title: t('highDust'),
+          description: t('highDustDesc'),
+        });
+      }
     }
   }
 

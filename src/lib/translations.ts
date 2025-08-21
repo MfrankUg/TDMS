@@ -1,3 +1,4 @@
+
 export const translations = {
   en: {
     login: 'Login',
@@ -70,7 +71,14 @@ export const translations = {
     highHumidityDesc: 'Increase ventilation or use a dehumidifier to reduce moisture.',
     highDust: 'High Dust Alert',
     highDustDesc: 'Clean the sensors and the room to reduce dust particles.',
-
+    settingsDescription: 'Calibrate the warning and danger thresholds for your sensor alerts.',
+    saveChanges: 'Save Changes',
+    supportDescription: 'Need help? Fill out the form below and our team will get back to you.',
+    subject: 'Subject',
+    subjectPlaceholder: 'e.g., Sensor is offline',
+    message: 'Message',
+    messagePlaceholder: 'Please describe your issue in detail...',
+    submitRequest: 'Submit Request',
   },
   sw: {
     login: 'Ingia',
@@ -143,6 +151,14 @@ export const translations = {
     highHumidityDesc: 'Ongeza uingizaji hewa au tumia kiondoa unyevu ili kupunguza unyevu.',
     highDust: 'Arifa ya Vumbi Kingi',
     highDustDesc: 'Safisha sensa na chumba ili kupunguza chembe za vumbi.',
+    settingsDescription: 'Rekebisha vizingiti vya onyo na hatari kwa arifa zako za sensa.',
+    saveChanges: 'Hifadhi Mabadiliko',
+    supportDescription: 'Unahitaji msaada? Jaza fomu hapa chini na timu yetu itawasiliana nawe.',
+    subject: 'Kichwa cha habari',
+    subjectPlaceholder: 'k.m., Sensa haifanyi kazi',
+    message: 'Ujumbe',
+    messagePlaceholder: 'Tafadhali eleza tatizo lako kwa undani...',
+    submitRequest: 'Tuma Ombi',
   },
   lg: {
     login: 'Yingira',
@@ -215,6 +231,14 @@ export const translations = {
     highHumidityDesc: 'Yongera omuyaga oba kozesa ekikendeeza obunnyogovu.',
     highDust: 'Okulabula kw\'Enfuufu Nnyingi',
     highDustDesc: 'Longoola sensa n\'ekisenge okukendeeza enfuufu.',
+    settingsDescription: 'Tegeka empeeke z’okulabula n’obulabe ku byuma byo.',
+    saveChanges: 'Tegeka Enkyukakyuka',
+    supportDescription: 'Weetaaga obuyambi? Jjuza foomu eno wansi era ttiimu yaffe ejja kukutuukirira.',
+    subject: 'Omutwe',
+    subjectPlaceholder: 'k.e., Sensale eri ku layini',
+    message: 'Obubaka',
+    messagePlaceholder: 'Bambi nnyonnyola ekizibu kyo mu bujjuvu...',
+    submitRequest: 'Weereza Okusaba',
   },
   ru: {
     login: 'Ingira',
@@ -287,6 +311,14 @@ export const translations = {
     highHumidityDesc: 'Yongera emiyaga rundi kozesa ekisemesa obutote.',
     highDust: 'Okwerinda kw\'Enfuufu Nyingi',
     highDustDesc: 'Semeza sensa n\'ekisenge okusemeza enfuufu.',
+    settingsDescription: 'Tegeka emipaka y\'okwerinda n\'akabi ha byapa byawe bya sensa.',
+    saveChanges: 'Bika Enkyukakyuka',
+    supportDescription: 'Noyetaaga obwahwezi? Jjuza foomu enu hansi kandi timu yaitu neija kukugarukamu.',
+    subject: 'Omutwe',
+    subjectPlaceholder: 'e.g., Sensa teri ha mukutu',
+    message: 'Obutumwa',
+    messagePlaceholder: 'Twakusaba, sobanura ekizibu kyawe kurungi...',
+    submitRequest: 'Korra Okusaba',
   },
 };
 
