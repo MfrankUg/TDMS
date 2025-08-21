@@ -102,8 +102,6 @@ export function useSensorData() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 15000); // Poll every 15 seconds
-    return () => clearInterval(interval);
   }, [fetchData]);
 
   return { sensors, loading, error, refetch: fetchData };
