@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect } from 'react';
@@ -14,11 +15,13 @@ export default function DashboardLayout({
   const router = useRouter();
 
   useEffect(() => {
-    if (user === null) {
+    const storedUser = localStorage.getItem('user');
+    if (!user && !storedUser) {
       router.push('/login');
     }
   }, [user, router]);
 
+  // This prevents a flash of unauthenticated content
   if (!user) {
     return (
       <div className="flex min-h-screen items-center justify-center">

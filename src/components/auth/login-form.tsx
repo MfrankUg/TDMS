@@ -72,6 +72,8 @@ export function LoginForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    // Here you would typically validate password against a backend.
+    // For this prototype, we'll just log the user in.
     login(values.email);
   }
 

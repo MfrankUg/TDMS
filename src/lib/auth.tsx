@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
@@ -15,21 +16,14 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<{ email: string } | null>(null);
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
-    // This is a mock implementation. In a real app, you'd check for a token in localStorage or a cookie.
+    // This is a mock implementation. In a real app, you'd verify a token with a backend.
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
-
-  useEffect(() => {
-    if (user && (pathname === '/login' || pathname === '/signup')) {
-      router.push('/dashboard');
-    }
-  }, [user, pathname, router]);
 
   const login = (email: string) => {
     const userData = { email };
