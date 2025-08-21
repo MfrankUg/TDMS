@@ -225,9 +225,6 @@ export function SignupForm() {
                     <ShieldCheck className="h-4 w-4 text-green-600" />
                     <span>Your data is securely stored</span>
                 </div>
-                 <Link href="#" className="underline hover:text-primary">
-                    Forgot password?
-                 </Link>
             </div>
             <Button type="submit" className="w-full">
               Sign Up
