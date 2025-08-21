@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Sensor, SensorDataPoint } from '@/lib/types';
-import { useSettings } from './use-settings';
+import { useSettings } from '@/hooks/use-settings';
 
 const API_URL = "https://api.thingspeak.com/channels/2890593/feeds.json?api_key=CJDLIMXOTJ3RVEPF&results=30";
 

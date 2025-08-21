@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
-import { DashboardHeader } from '@/components/dashboard/header';
+import { DashboardHeader } from '@/app/dashboard/header';
 import { SettingsProvider } from '@/hooks/use-settings';
 
 export default function DashboardLayout({
@@ -22,8 +22,7 @@ export default function DashboardLayout({
     }
   }, [user, router]);
 
-  // This prevents a flash of unauthenticated content
-  if (!user) {
+  if (!user && typeof window !== 'undefined' && !localStorage.getItem('user')) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <p>Loading...</p>
