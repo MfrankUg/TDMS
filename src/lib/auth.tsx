@@ -3,8 +3,8 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User as FirebaseUser } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User as FirebaseUser, Auth } from 'firebase/auth';
+import { getFirestore, doc, setDoc, getDoc, Firestore } from 'firebase/firestore';
 import { app } from './firebase';
 
 interface User {
@@ -22,22 +22,26 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [auth, setAuth] = useState<Auth | null>(null);
+  const [db, setDb] = useState<Firestore | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    const authInstance = getAuth(app);
+    const dbInstance = getFirestore(app);
+    setAuth(authInstance);
+    setDb(dbInstance);
+
+    const unsubscribe = onAuthStateChanged(authInstance, async (firebaseUser) => {
       if (firebaseUser) {
-        const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
+        const userDoc = await getDoc(doc(dbInstance, "users", firebaseUser.uid));
         if (userDoc.exists()) {
            setUser({ uid: firebaseUser.uid, email: firebaseUser.email!, fullName: userDoc.data().fullName });
         } else {
-           // Handle case where user exists in Auth but not Firestore
            setUser({ uid: firebaseUser.uid, email: firebaseUser.email!, fullName: firebaseUser.email! });
         }
       } else {
@@ -50,12 +54,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
+    if (!auth) return;
     setLoading(true);
     await signInWithEmailAndPassword(auth, email, password);
     router.push('/dashboard');
   };
 
   const signup = async (userData: any) => {
+    if (!auth || !db) return;
     setLoading(true);
     const { email, password, fullName, countryCode, telephone, role } = userData;
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -73,6 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async () => {
+    if (!auth) return;
     await signOut(auth);
     router.push('/login');
   };
