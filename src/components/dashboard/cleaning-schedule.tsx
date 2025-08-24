@@ -145,7 +145,7 @@ export function CleaningSchedule({ sensorData }: CleaningScheduleProps) {
                 </div>
                 <div className="text-right">
                     <p className={cn("text-lg font-semibold", getAirQualityColor(prediction.airQuality))}>
-                       {t('airQuality')}: {prediction.airQuality}
+                       {t('airQuality')}: {t(prediction.airQuality.toLowerCase() as any)}
                     </p>
                     <p className="text-sm text-muted-foreground">{t('dustAccumulation')}</p>
                 </div>

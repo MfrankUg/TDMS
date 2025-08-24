@@ -99,7 +99,11 @@ export const translations = {
     dust_high_alert_message: "Dust level is predicted to reach {{predictedValue}} PPM, exceeding the {{thresholdValue}} PPM threshold.",
     temp_prediction_failed: "Failed to get temperature prediction.",
     humidity_prediction_failed: "Failed to get humidity prediction.",
-    dust_prediction_failed: "Failed to get dust particle prediction."
+    dust_prediction_failed: "Failed to get dust particle prediction.",
+    excellent: 'Excellent',
+    good: 'Good',
+    moderate: 'Moderate',
+    poor: 'Poor',
   },
   sw: {
     login: 'Ingia',
@@ -200,7 +204,11 @@ export const translations = {
     dust_high_alert_message: "Kiwango cha vumbi kinatabiriwa kufikia {{predictedValue}} PPM, na kuvuka kizingiti cha {{thresholdValue}} PPM.",
     temp_prediction_failed: "Imeshindwa kupata utabiri wa joto.",
     humidity_prediction_failed: "Imeshindwa kupata utabiri wa unyevu.",
-    dust_prediction_failed: "Imeshindwa kupata utabiri wa chembe za vumbi."
+    dust_prediction_failed: "Imeshindwa kupata utabiri wa chembe za vumbi.",
+    excellent: 'Bora',
+    good: 'Nzuri',
+    moderate: 'Wastani',
+    poor: 'Duni',
   },
   lg: {
     login: 'Yingira',
@@ -301,7 +309,11 @@ export const translations = {
     dust_high_alert_message: "Omuzingo gw'enfuufu gulaguddwa okutuuka ku {{predictedValue}} PPM, nga guyita ku kkomo lya {{thresholdValue}} PPM.",
     temp_prediction_failed: "Kiremereddwa okufuna ekiragulo ky'ebbugumu.",
     humidity_prediction_failed: "Kiremereddwa okufuna ekiragulo ky'obunnyogovu.",
-    dust_prediction_failed: "Kiremereddwa okufuna ekiragulo ky'obuntu bw'enfuufu."
+    dust_prediction_failed: "Kiremereddwa okufuna ekiragulo ky'obuntu bw'enfuufu.",
+    excellent: 'Kya waggulu',
+    good: 'Kirungi',
+    moderate: 'Kya wakati',
+    poor: 'Kibi',
   },
   ru: {
     login: 'Ingira',
@@ -380,7 +392,7 @@ export const translations = {
     subject: 'Omutwe',
     subjectPlaceholder: 'e.g., Sensa teri ha mukutu',
     message: 'Obutumwa',
-    messagePlaceholder: 'Twakusaba, sobanura ekizibu kyawe kurungi...',
+    placeholder: 'Twakusaba, sobanura ekizibu kyawe kurungi...',
     submitRequest: 'Korra Okusaba',
     cleaningSchedule: 'Entegeka y’Okwezya',
     days: 'Enaku',
@@ -402,7 +414,11 @@ export const translations = {
     dust_high_alert_message: "Omuzingo gw'enfuufu guli kulanga kufika ha {{predictedValue}} PPM, nikwingana omupaka gwa {{thresholdValue}} PPM.",
     temp_prediction_failed: "Kyanemera okutunga okulanga kw'obwire.",
     humidity_prediction_failed: "Kyanemera okutunga okulanga kw'obutote.",
-    dust_prediction_failed: "Kyanemera okutunga okulanga kw'obuntu bw'enfuufu."
+    dust_prediction_failed: "Kyanemera okutunga okulanga kw'obuntu bw'enfuufu.",
+    excellent: 'Kurungi muno',
+    good: 'Kurungi',
+    moderate: 'Hagati na hagati',
+    poor: 'Kubi',
   },
 };
 
