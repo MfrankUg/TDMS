@@ -104,6 +104,9 @@ export const translations = {
     good: 'Good',
     moderate: 'Moderate',
     poor: 'Poor',
+    recommendation_immediate: 'Immediate cleaning recommended. High dust levels predicted within the next few days. Current accumulation rate is high.',
+    recommendation_soon: 'Schedule cleaning soon. The next routine cleaning is recommended in approximately {{remainingDays}} days to maintain optimal air quality.',
+    recommendation_normal: 'Air quality is good. Continue monitoring. Next routine cleaning can be performed in {{remainingDays}} days.',
   },
   sw: {
     login: 'Ingia',
@@ -209,6 +212,9 @@ export const translations = {
     good: 'Nzuri',
     moderate: 'Wastani',
     poor: 'Duni',
+    recommendation_immediate: 'Usafi wa haraka unapendekezwa. Viwango vya juu vya vumbi vinatabiriwa katika siku chache zijazo. Kiwango cha sasa cha mkusanyiko ni cha juu.',
+    recommendation_soon: 'Panga usafi hivi karibuni. Usafi ujao wa kawaida unapendekezwa katika takriban siku {{remainingDays}} ili kudumisha ubora bora wa hewa.',
+    recommendation_normal: 'Ubora wa hewa ni mzuri. Endelea kufuatilia. Usafi ujao wa kawaida unaweza kufanywa katika siku {{remainingDays}}.',
   },
   lg: {
     login: 'Yingira',
@@ -314,6 +320,9 @@ export const translations = {
     good: 'Kirungi',
     moderate: 'Kya wakati',
     poor: 'Kibi',
+    recommendation_immediate: 'Okuyonja amangu kyetaagisa. Omuzingo gw’enfuufu mungi gulaguddwa mu nnaku ntono ezijja. Omwendo gw’okukung’aana gw’amangu.',
+    recommendation_soon: 'Teekateeka okuyonja mangu. Okuyonja okw’omulundi oguddako kulagiriddwa mu nnaku nga {{remainingDays}} okukuuma omutindo gw’empewo omulungi.',
+    recommendation_normal: 'Omutindo gw’empewo mulungi. Genda mu maaso n’okulondoola. Okuyonja okw’omulundi oguddako kusobola okukolebwa mu nnaku {{remainingDays}}.',
   },
   ru: {
     login: 'Ingira',
@@ -419,6 +428,9 @@ export const translations = {
     good: 'Kurungi',
     moderate: 'Hagati na hagati',
     poor: 'Kubi',
+    recommendation_immediate: 'Okwezya kw’omwanya gumu nikwenda. Omuzingo gw’enfuufu gwingi nigurangirwa omu naku ntono ezirukwija. Omuhendo gw’okweyongera gw’omwanya gumu guli haiguru.',
+    recommendation_soon: 'Tegeka okwezya bwangu. Okwezya okwa buliijo okukurataho nikuhaburwa omu naku nka {{remainingDays}} okuhikiriza omutindo gw’omwika ogurungi.',
+    recommendation_normal: 'Omutindo gw’omwika guli mulungi. Genda nomu maisho okwerinda. Okwezya okwa buliijo okukurataho nikusobora kukorwa omu naku {{remainingDays}}.',
   },
 };
 

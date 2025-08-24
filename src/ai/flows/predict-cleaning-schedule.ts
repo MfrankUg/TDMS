@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -22,7 +23,7 @@ const PredictCleaningScheduleOutputSchema = z.object({
   remainingDays: z.number().describe('The predicted number of days remaining until the next cleaning is required.'),
   airQuality: z.string().describe('The current air quality status (e.g., Excellent, Good, Moderate, Poor).'),
   dustAccumulationPercent: z.number().describe('The current dust level as a percentage of the cleaning threshold.'),
-  recommendation: z.string().describe('A text recommendation for the user based on the prediction.'),
+  recommendationKey: z.string().describe('A key for the text recommendation for the user based on the prediction (e.g., recommendation_immediate).'),
   lastCleaned: z.string().describe('A human-readable string indicating when the warehouse was last cleaned (e.g., "4 days ago").'),
   accumulationRate: z.number().describe('The calculated daily dust accumulation rate in µg/m³/day.'),
 });
@@ -83,13 +84,13 @@ export async function predictCleaningSchedule(input: PredictCleaningScheduleInpu
     else airQuality = "Poor";
 
     // 4. Generate Recommendation
-    let recommendation;
+    let recommendationKey;
     if (remainingDays <= 3) {
-        recommendation = `Immediate cleaning recommended. High dust levels predicted within the next few days. Current accumulation rate is high.`;
+        recommendationKey = 'recommendation_immediate';
     } else if (remainingDays <= 7) {
-        recommendation = `Schedule cleaning soon. The next routine cleaning is recommended in approximately ${remainingDays} days to maintain optimal air quality.`;
+        recommendationKey = 'recommendation_soon';
     } else {
-        recommendation = `Air quality is good. Continue monitoring. Next routine cleaning can be performed in ${remainingDays} days.`;
+        recommendationKey = 'recommendation_normal';
     }
 
     // 5. Format Last Cleaned Date
@@ -100,7 +101,7 @@ export async function predictCleaningSchedule(input: PredictCleaningScheduleInpu
         remainingDays,
         airQuality,
         dustAccumulationPercent: parseFloat(dustAccumulationPercent.toFixed(1)),
-        recommendation,
+        recommendationKey,
         lastCleaned,
         accumulationRate: parseFloat(dailyAccumulationRate.toFixed(1)),
     };

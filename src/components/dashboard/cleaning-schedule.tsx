@@ -161,7 +161,9 @@ export function CleaningSchedule({ sensorData }: CleaningScheduleProps) {
 
         <div>
             <p className="font-semibold text-sm">{t('recommendation')}:</p>
-            <p className="text-sm text-muted-foreground mt-1">{prediction.recommendation}</p>
+            <p className="text-sm text-muted-foreground mt-1">
+                {t(prediction.recommendationKey as any, { remainingDays: prediction.remainingDays.toString() })}
+            </p>
         </div>
         
         <div className="grid grid-cols-2 gap-4 pt-4 border-t">
