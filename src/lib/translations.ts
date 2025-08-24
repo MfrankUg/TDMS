@@ -93,7 +93,13 @@ export const translations = {
     nextCleaningIn: 'Next Cleaning In',
     daysAgo: 'days ago',
     day: 'day',
-    noDustData: 'Not enough dust data available to make a prediction.'
+    noDustData: 'Not enough dust data available to make a prediction.',
+    temp_high_alert_message: "Temperature is predicted to reach {{predictedValue}}°C, exceeding the {{thresholdValue}}°C threshold.",
+    humidity_high_alert_message: "Humidity is predicted to reach {{predictedValue}}%, exceeding the {{thresholdValue}}% threshold.",
+    dust_high_alert_message: "Dust level is predicted to reach {{predictedValue}} PPM, exceeding the {{thresholdValue}} PPM threshold.",
+    temp_prediction_failed: "Failed to get temperature prediction.",
+    humidity_prediction_failed: "Failed to get humidity prediction.",
+    dust_prediction_failed: "Failed to get dust particle prediction."
   },
   sw: {
     login: 'Ingia',
@@ -188,7 +194,13 @@ export const translations = {
     nextCleaningIn: 'Usafi Ujao Katika',
     daysAgo: 'siku zilizopita',
     day: 'siku',
-    noDustData: 'Hakuna data ya kutosha ya vumbi ili kufanya utabiri.'
+    noDustData: 'Hakuna data ya kutosha ya vumbi ili kufanya utabiri.',
+    temp_high_alert_message: "Joto linatabiriwa kufikia {{predictedValue}}°C, na kuvuka kizingiti cha {{thresholdValue}}°C.",
+    humidity_high_alert_message: "Unyevu unatabiriwa kufikia {{predictedValue}}%, na kuvuka kizingiti cha {{thresholdValue}}%.",
+    dust_high_alert_message: "Kiwango cha vumbi kinatabiriwa kufikia {{predictedValue}} PPM, na kuvuka kizingiti cha {{thresholdValue}} PPM.",
+    temp_prediction_failed: "Imeshindwa kupata utabiri wa joto.",
+    humidity_prediction_failed: "Imeshindwa kupata utabiri wa unyevu.",
+    dust_prediction_failed: "Imeshindwa kupata utabiri wa chembe za vumbi."
   },
   lg: {
     login: 'Yingira',
@@ -283,7 +295,13 @@ export const translations = {
     nextCleaningIn: 'Okuyonja Okuddako mu',
     daysAgo: 'ennaku eziyise',
     day: 'olunaku',
-    noDustData: 'Tewali data ya nfuufu emala okusobola okulagula.'
+    noDustData: 'Tewali data ya nfuufu emala okusobola okulagula.',
+    temp_high_alert_message: "Ebbugumu liraguddwa okutuuka ku {{predictedValue}}°C, nga liyita ku kkomo lya {{thresholdValue}}°C.",
+    humidity_high_alert_message: "Obunnyogovu bulaguddwa okutuuka ku {{predictedValue}}%, nga buyita ku kkomo lya {{thresholdValue}}%.",
+    dust_high_alert_message: "Omuzingo gw'enfuufu gulaguddwa okutuuka ku {{predictedValue}} PPM, nga guyita ku kkomo lya {{thresholdValue}} PPM.",
+    temp_prediction_failed: "Kiremereddwa okufuna ekiragulo ky'ebbugumu.",
+    humidity_prediction_failed: "Kiremereddwa okufuna ekiragulo ky'obunnyogovu.",
+    dust_prediction_failed: "Kiremereddwa okufuna ekiragulo ky'obuntu bw'enfuufu."
   },
   ru: {
     login: 'Ingira',
@@ -378,7 +396,13 @@ export const translations = {
     nextCleaningIn: 'Okwezya Okukurataho omu',
     daysAgo: 'enaku ezihingwire',
     day: 'runaku',
-    noDustData: 'Tihariho data y\'enfuufu ekikumara okuranga.'
+    noDustData: 'Tihariho data y\'enfuufu ekikumara okuranga.',
+    temp_high_alert_message: "Obwire buri kulanga kufika ha {{predictedValue}}°C, nikwingana omupaka gwa {{thresholdValue}}°C.",
+    humidity_high_alert_message: "Obutote buli kulanga kufika ha {{predictedValue}}%, nikwingana omupaka gwa {{thresholdValue}}%.",
+    dust_high_alert_message: "Omuzingo gw'enfuufu guli kulanga kufika ha {{predictedValue}} PPM, nikwingana omupaka gwa {{thresholdValue}} PPM.",
+    temp_prediction_failed: "Kyanemera okutunga okulanga kw'obwire.",
+    humidity_prediction_failed: "Kyanemera okutunga okulanga kw'obutote.",
+    dust_prediction_failed: "Kyanemera okutunga okulanga kw'obuntu bw'enfuufu."
   },
 };
 

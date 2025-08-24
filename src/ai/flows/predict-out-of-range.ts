@@ -21,16 +21,18 @@ const PredictOutOfRangeInputSchema = z.object({
 });
 export type PredictOutOfRangeInput = z.infer<typeof PredictOutOfRangeInputSchema>;
 
+const AlertObjectSchema = z.object({
+    isAlert: z.boolean().describe('Whether an alert should be triggered.'),
+    messageKey: z.string().describe("A key to be used for translation, e.g., 'temp_high_alert_message' or null."),
+    predictedValue: z.number().describe('The predicted sensor value.'),
+    thresholdValue: z.number().describe('The threshold value for this sensor.'),
+}).nullable();
+
+
 const PredictOutOfRangeOutputSchema = z.object({
-  temperatureAlert: z
-    .string()
-    .describe('An alert message if the predicted temperature exceeds the threshold, otherwise null.'),
-  humidityAlert: z
-    .string()
-    .describe('An alert message if the predicted humidity exceeds the threshold, otherwise null.'),
-  dustParticleAlert: z
-    .string()
-    .describe('An alert message if the predicted dust particle level exceeds the threshold, otherwise null.'),
+  temperatureAlert: AlertObjectSchema,
+  humidityAlert: AlertObjectSchema,
+  dustParticleAlert: AlertObjectSchema,
 });
 export type PredictOutOfRangeOutput = z.infer<typeof PredictOutOfRangeOutputSchema>;
 
@@ -44,9 +46,16 @@ const predictOutOfRangePrompt = ai.definePrompt({
   output: {schema: PredictOutOfRangeOutputSchema},
   prompt: `You are an AI assistant specializing in predicting out-of-range sensor values in a warehouse environment.
 
-  Given the historical sensor readings and defined thresholds, predict whether the temperature, humidity, and dust particle levels will exceed their respective thresholds in the near future.
+  Given the historical sensor readings and defined thresholds, analyze the trend and predict the sensor value for the next hour.
 
-  Provide a concise alert message if a threshold is predicted to be exceeded. If everything is within range, the corresponding alert should be null.
+  For each sensor type (temperature, humidity, dust), determine if the predicted value will exceed the threshold.
+
+  - If a threshold is predicted to be exceeded:
+    - Set 'isAlert' to true.
+    - Set 'messageKey' to the appropriate key (e.g., 'temp_high_alert_message', 'humidity_high_alert_message', 'dust_high_alert_message').
+    - Include the 'predictedValue' and 'thresholdValue'.
+  - If everything is predicted to be within the normal range for a sensor:
+    - Return null for that sensor's alert object.
 
   Here's the historical sensor data and thresholds:
 

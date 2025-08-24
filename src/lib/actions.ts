@@ -45,9 +45,9 @@ export async function handlePrediction(input: PredictOutOfRangeInput): Promise<P
     console.error("Error in handlePrediction:", error);
     // Return a default error state if the prediction fails
     return {
-      temperatureAlert: "Failed to get temperature prediction.",
-      humidityAlert: "Failed to get humidity prediction.",
-      dustParticleAlert: "Failed to get dust particle prediction.",
+      temperatureAlert: { isAlert: true, messageKey: 'temp_prediction_failed', predictedValue: 0, thresholdValue: 0 },
+      humidityAlert: { isAlert: true, messageKey: 'humidity_prediction_failed', predictedValue: 0, thresholdValue: 0 },
+      dustParticleAlert: { isAlert: true, messageKey: 'dust_prediction_failed', predictedValue: 0, thresholdValue: 0 },
     };
   }
 }

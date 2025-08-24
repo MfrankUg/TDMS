@@ -10,12 +10,12 @@ import { AlertTriangle, CheckCircle2, RefreshCw } from "lucide-react";
 import { PredictOutOfRangeOutput } from "@/ai/flows/predict-out-of-range";
 import { useTranslation } from "@/hooks/use-translation";
 import type { Sensor } from "@/lib/types";
+import type { TranslationKeys } from "@/lib/translations";
 
 
 interface PredictiveAlertsProps {
   sensorData: Sensor[];
 }
-
 
 export function PredictiveAlerts({ sensorData }: PredictiveAlertsProps) {
   const [predictions, setPredictions] = useState<PredictOutOfRangeOutput | null>(null);
@@ -85,10 +85,11 @@ export function PredictiveAlerts({ sensorData }: PredictiveAlertsProps) {
     predictions.temperatureAlert,
     predictions.humidityAlert,
     predictions.dustParticleAlert,
-  ].filter((alert): alert is string => !!alert) : [];
+  ].filter((alert): alert is NonNullable<typeof alert> => !!(alert && alert.isAlert)) : [];
+
 
   const hasFailedPredictions = predictions 
-    ? Object.values(predictions).some(p => p?.toLowerCase().includes('failed'))
+    ? Object.values(predictions).some(p => p?.messageKey?.toLowerCase().includes('fail'))
     : false;
 
   return (
@@ -121,7 +122,12 @@ export function PredictiveAlerts({ sensorData }: PredictiveAlertsProps) {
             <Alert key={index} variant="destructive">
               <AlertTriangle className="h-4 w-4" />
               <AlertTitle>{t('predictiveAlert')}</AlertTitle>
-              <AlertDescription>{alert}</AlertDescription>
+              <AlertDescription>
+                  {t(alert.messageKey as TranslationKeys, { 
+                      predictedValue: alert.predictedValue.toFixed(1),
+                      thresholdValue: alert.thresholdValue.toFixed(1),
+                  })}
+              </AlertDescription>
             </Alert>
           ))}
         </div>
