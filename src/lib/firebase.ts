@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAljCd6PAlBH88CwAKNE5im1tS89XbjrMg",
   authDomain: "warehouse-sentinel.firebaseapp.com",
   projectId: "warehouse-sentinel",
-  storageBucket: "warehouse-sentinel.firebasestorage.app",
+  storageBucket: "warehouse-sentinel.appspot.com",
   messagingSenderId: "1036071190821",
   appId: "1:1036071190821:web:33a7bd8ffa6179341fdacc",
 };
