@@ -10,6 +10,7 @@ import { Thermometer, Droplets, Wind, RefreshCw, Atom, Sparkles } from "lucide-r
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
+import { CleaningSchedule } from "@/components/dashboard/cleaning-schedule";
 
 export default function DashboardPage() {
   const { sensors, loading, error, refetch } = useSensorData();
@@ -53,6 +54,8 @@ export default function DashboardPage() {
         </div>
 
         <PredictiveAlerts sensorData={sensors} />
+
+        <CleaningSchedule sensorData={sensors} />
 
         <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
            {loading ? (

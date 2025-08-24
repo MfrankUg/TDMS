@@ -4,6 +4,7 @@
 import { querySensorData, QuerySensorDataInput, QuerySensorDataOutput } from "@/ai/flows/query-sensor-data";
 import { predictOutOfRange, PredictOutOfRangeInput, PredictOutOfRangeOutput } from "@/ai/flows/predict-out-of-range";
 import { translateText, TranslateTextInput, TranslateTextOutput } from "@/ai/flows/translate-text";
+import { predictCleaningSchedule, PredictCleaningScheduleInput, PredictCleaningScheduleOutput } from "@/ai/flows/predict-cleaning-schedule";
 
 // Simple in-memory cache for predictions
 let cachedPrediction: { timestamp: number; data: PredictOutOfRangeOutput } | null = null;
@@ -17,7 +18,7 @@ export async function handleQuery(input: QuerySensorDataInput): Promise<QuerySen
     console.error("Error in handleQuery:", error);
     const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
     return {
-        answer: `Sorry, I encountered an error while processing your request: ${errorMessage} Please try again.`
+        answer: `Sorry, I encountered an error while processing your request. Please try again.`
     };
   }
 }
@@ -61,4 +62,15 @@ export async function handleTranslation(input: TranslateTextInput): Promise<Tran
       translatedText: "Sorry, I could not translate the text.",
     };
   }
+}
+
+
+export async function handleCleaningPrediction(input: PredictCleaningScheduleInput): Promise<PredictCleaningScheduleOutput> {
+    try {
+        const result = await predictCleaningSchedule(input);
+        return result;
+    } catch (error) {
+        console.error("Error in handleCleaningPrediction:", error);
+        throw new Error("Failed to get cleaning schedule prediction.");
+    }
 }
