@@ -81,7 +81,7 @@ export const translations = {
     submitRequest: 'Submit Request',
     cleaningSchedule: 'Cleaning Schedule',
     days: 'Days',
-    airQuality: 'Air quality',
+    airQuality: 'Air Quality',
     dustParticles: 'Dust Particles',
     ofThreshold: 'of threshold',
     dustAccumulation: 'Dust Accumulation',
@@ -90,6 +90,10 @@ export const translations = {
     recommendation: 'Recommendation',
     lastCleaned: 'Last Cleaned',
     accumulationRate: 'Accumulation Rate',
+    nextCleaningIn: 'Next Cleaning In',
+    daysAgo: 'days ago',
+    day: 'day',
+    noDustData: 'Not enough dust data available to make a prediction.'
   },
   sw: {
     login: 'Ingia',
@@ -181,6 +185,10 @@ export const translations = {
     recommendation: 'Pendekezo',
     lastCleaned: 'Ilisafishwa Mwisho',
     accumulationRate: 'Kiwango cha Mkusanyiko',
+    nextCleaningIn: 'Usafi Ujao Katika',
+    daysAgo: 'siku zilizopita',
+    day: 'siku',
+    noDustData: 'Hakuna data ya kutosha ya vumbi ili kufanya utabiri.'
   },
   lg: {
     login: 'Yingira',
@@ -272,6 +280,10 @@ export const translations = {
     recommendation: 'Okulagirira',
     lastCleaned: 'Lwe Yasembayo Okuyonja',
     accumulationRate: 'Omwendo gw’Okukung’aana',
+    nextCleaningIn: 'Okuyonja Okuddako mu',
+    daysAgo: 'ennaku eziyise',
+    day: 'olunaku',
+    noDustData: 'Tewali data ya nfuufu emala okusobola okulagula.'
   },
   ru: {
     login: 'Ingira',
@@ -363,6 +375,10 @@ export const translations = {
     recommendation: 'Obuhabuzi',
     lastCleaned: 'Hakezyebweyo',
     accumulationRate: 'Omuhendo gw’okweyongera',
+    nextCleaningIn: 'Okwezya Okukurataho omu',
+    daysAgo: 'enaku ezihingwire',
+    day: 'runaku',
+    noDustData: 'Tihariho data y\'enfuufu ekikumara okuranga.'
   },
 };
 

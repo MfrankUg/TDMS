@@ -45,7 +45,7 @@ function linearRegression(readings: number[]): { slope: number; intercept: numbe
     const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
     const intercept = (sumY - slope * sumX) / n;
     
-    return { slope: isNaN(slope) ? 0 : slope, intercept: isNaN(intercept) ? 0 : intercept };
+    return { slope: isNaN(slope) ? 0 : slope, intercept: isNaN(intercept) ? readings[0] || 0 : intercept };
 }
 
 
@@ -57,17 +57,19 @@ export async function predictCleaningSchedule(input: PredictCleaningScheduleInpu
 
     // 1. Calculate Accumulation Rate using Linear Regression
     const { slope: accumulationRate } = linearRegression(dustReadings);
-    const dailyAccumulationRate = Math.max(0, accumulationRate * 24); // Assuming readings are hourly
+    // Assuming readings are roughly hourly, we multiply by 24 to get a daily rate.
+    // We also cap it at 0 to prevent negative accumulation rates from confusing the prediction.
+    const dailyAccumulationRate = Math.max(0, accumulationRate * 24);
 
     const currentDustLevel = dustReadings[dustReadings.length - 1] || 0;
 
     // 2. Predict Remaining Days
     let remainingDays;
-    if (dailyAccumulationRate <= 0) {
-        remainingDays = BASELINE_CLEANING_DAYS - lastCleanedDaysAgo;
+    if (dailyAccumulationRate <= 0.1) { // If accumulation is negligible or negative
+        remainingDays = Math.max(0, BASELINE_CLEANING_DAYS - lastCleanedDaysAgo);
     } else {
         const daysToReachThreshold = (DUST_THRESHOLD - currentDustLevel) / dailyAccumulationRate;
-        remainingDays = Math.min(BASELINE_CLEANING_DAYS - lastCleanedDaysAgo, Math.floor(daysToReachThreshold));
+        remainingDays = Math.floor(daysToReachThreshold);
     }
     remainingDays = Math.max(0, remainingDays);
 
@@ -83,11 +85,11 @@ export async function predictCleaningSchedule(input: PredictCleaningScheduleInpu
     // 4. Generate Recommendation
     let recommendation;
     if (remainingDays <= 3) {
-        recommendation = `Immediate cleaning recommended. High dust levels predicted within ${remainingDays} days.`;
+        recommendation = `Immediate cleaning recommended. High dust levels predicted within the next few days. Current accumulation rate is high.`;
     } else if (remainingDays <= 7) {
-        recommendation = `Schedule cleaning soon. Next routine cleaning recommended in ${remainingDays} days.`;
+        recommendation = `Schedule cleaning soon. The next routine cleaning is recommended in approximately ${remainingDays} days to maintain optimal air quality.`;
     } else {
-        recommendation = `Continue monitoring. Next routine cleaning in ${remainingDays} days.`;
+        recommendation = `Air quality is good. Continue monitoring. Next routine cleaning can be performed in ${remainingDays} days.`;
     }
 
     // 5. Format Last Cleaned Date
