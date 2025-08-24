@@ -29,7 +29,7 @@ export function DashboardHeader() {
   const { notifications, isLoading } = useNotifications();
   const router = useRouter();
   
-  const userInitial = user?.email?.[0].toUpperCase() || "U";
+  const userInitial = user?.fullName?.[0].toUpperCase() || user?.email?.[0].toUpperCase() || "U";
   const hasNotifications = notifications.length > 0;
 
   return (
@@ -104,7 +104,7 @@ export function DashboardHeader() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>
-              <p>{t('myAccount')}</p>
+              <p>{user?.fullName || t('myAccount')}</p>
               <p className="text-xs text-muted-foreground font-normal">{user?.email}</p>
               </DropdownMenuLabel>
             <DropdownMenuSeparator />

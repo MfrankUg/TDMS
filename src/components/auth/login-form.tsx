@@ -25,6 +25,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/auth";
 import { useTranslation } from "@/hooks/use-translation";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
@@ -63,6 +65,8 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 export function LoginForm() {
   const { login } = useAuth();
   const { t } = useTranslation();
+  const [error, setError] = useState<string | null>(null);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,10 +75,18 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Here you would typically validate password against a backend.
-    // For this prototype, we'll just log the user in.
-    login(values.email);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setError(null);
+    try {
+      await login(values.email, values.password);
+    } catch (error: any) {
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+        setError("Invalid email or password. Please try again.");
+      } else {
+        setError("An unexpected error occurred. Please try again later.");
+      }
+      console.error("Login error:", error);
+    }
   }
 
   return (
@@ -88,6 +100,11 @@ export function LoginForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+             {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
             <FormField
               control={form.control}
               name="email"
@@ -119,8 +136,8 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
-              {t('login')}
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? 'Logging in...' : t('login')}
             </Button>
           </form>
         </Form>

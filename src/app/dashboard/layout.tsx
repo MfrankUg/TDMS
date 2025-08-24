@@ -6,26 +6,39 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { DashboardHeader } from '@/app/dashboard/header';
 import { SettingsProvider } from '@/hooks/use-settings';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (!user && !storedUser) {
+    if (!loading && !user) {
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user, loading, router]);
 
-  if (!user && typeof window !== 'undefined' && !localStorage.getItem('user')) {
+  if (loading || !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
+      <div className="flex min-h-screen w-full flex-col">
+        <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-card px-4 md:px-6 z-10">
+          <Skeleton className="h-8 w-24" />
+          <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-8 w-8 rounded-full" />
+          </div>
+        </header>
+        <main className="flex flex-1 items-center justify-center">
+            <div className="flex items-center gap-2">
+                <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-primary"></div>
+                <p className="text-muted-foreground">Loading user data...</p>
+            </div>
+        </main>
       </div>
     );
   }

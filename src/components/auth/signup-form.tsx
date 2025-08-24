@@ -27,6 +27,8 @@ import { useAuth } from "@/lib/auth";
 import { useTranslation } from "@/hooks/use-translation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ShieldCheck } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const formSchema = z.object({
   fullName: z.string().min(1, { message: "Full name is required." }),
@@ -76,6 +78,8 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 export function SignupForm() {
   const { signup } = useAuth();
   const { t } = useTranslation();
+  const [error, setError] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,8 +93,18 @@ export function SignupForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    signup(values.email);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setError(null);
+    try {
+      await signup(values);
+    } catch (error: any) {
+       if (error.code === 'auth/email-already-in-use') {
+        setError("This email is already registered. Please login.");
+      } else {
+        setError("An unexpected error occurred. Please try again later.");
+      }
+      console.error("Signup error:", error);
+    }
   }
 
   return (
@@ -106,6 +120,11 @@ export function SignupForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+             {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
             <FormField
               control={form.control}
               name="fullName"
@@ -226,8 +245,8 @@ export function SignupForm() {
                     <span>Your data is securely stored</span>
                 </div>
             </div>
-            <Button type="submit" className="w-full">
-              Sign Up
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? 'Creating Account...' : 'Sign Up'}
             </Button>
             <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
@@ -256,5 +275,3 @@ export function SignupForm() {
     </Card>
   );
 }
-
-    
