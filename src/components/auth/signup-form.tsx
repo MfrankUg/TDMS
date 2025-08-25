@@ -112,7 +112,11 @@ export function SignupForm() {
     try {
       await loginWithGoogle();
     } catch (error: any) {
-      setError("Failed to sign in with Google. Please try again.");
+      if (error.code === 'auth/popup-closed-by-user') {
+        setError("The sign-in popup was closed. Please try again.");
+      } else {
+        setError("Failed to sign in with Google. Please try again.");
+      }
       console.error("Google login error:", error);
     }
   };

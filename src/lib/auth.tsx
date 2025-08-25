@@ -98,9 +98,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         });
       }
       router.push('/dashboard');
-    } catch (error) {
+    } catch (error: any) {
       console.error("Google sign-in error:", error);
+      // Let the calling component handle the error state
       setLoading(false);
+      throw error;
     }
   };
 
