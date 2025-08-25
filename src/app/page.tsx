@@ -111,6 +111,7 @@ export default function HomeComponent() {
                                 alt={image.alt}
                                 data-ai-hint={image.hint}
                                 className="mx-auto aspect-video overflow-hidden rounded-2xl object-cover"
+                                priority={index === 0}
                               />
                               <div className="absolute inset-0 bg-black/20 rounded-2xl flex items-end p-6">
                                 <p className="text-white text-lg font-semibold" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>{image.text}</p>
