@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
         hostname: 'i.ibb.co',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
       }
     ],
   },
@@ -39,7 +45,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com/ https://apis.google.com https://www.google.com; object-src 'none'; base-uri 'self'; ",
+            value: "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.firebaseapp.com https://*.firebaseio.com https://www.gstatic.com/ https://apis.google.com https://www.google.com; object-src 'none'; base-uri 'self';",
           },
         ],
       },
