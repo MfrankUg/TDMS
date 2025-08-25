@@ -76,7 +76,7 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export function SignupForm() {
-  const { signup } = useAuth();
+  const { signup, loginWithGoogle } = useAuth();
   const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
 
@@ -106,6 +106,16 @@ export function SignupForm() {
       console.error("Signup error:", error);
     }
   }
+
+  const handleGoogleLogin = async () => {
+    setError(null);
+    try {
+      await loginWithGoogle();
+    } catch (error: any) {
+      setError("Failed to sign in with Google. Please try again.");
+      console.error("Google login error:", error);
+    }
+  };
 
   return (
     <Card className="mx-auto max-w-md w-full">
@@ -258,7 +268,7 @@ export function SignupForm() {
                 </span>
                 </div>
             </div>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" onClick={handleGoogleLogin}>
                 <GoogleIcon className="mr-2 h-5 w-5" />
                 Continue with Google
             </Button>

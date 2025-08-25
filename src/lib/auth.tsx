@@ -3,7 +3,7 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User as FirebaseUser, Auth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User as FirebaseUser, Auth, GoogleAuthProvider, signInWithPopup, UserCredential } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, Firestore } from 'firebase/firestore';
 import { app } from './firebase';
 
@@ -17,8 +17,9 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
   signup: (userData: any) => Promise<void>;
+  logout: () => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (userDoc.exists()) {
            setUser({ uid: firebaseUser.uid, email: firebaseUser.email!, fullName: userDoc.data().fullName });
         } else {
-           setUser({ uid: firebaseUser.uid, email: firebaseUser.email!, fullName: firebaseUser.email! });
+           setUser({ uid: firebaseUser.uid, email: firebaseUser.email!, fullName: firebaseUser.displayName || firebaseUser.email! });
         }
       } else {
         setUser(null);
@@ -77,6 +78,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     router.push('/dashboard');
   };
+  
+  const loginWithGoogle = async () => {
+    if (!auth || !db) return;
+    setLoading(true);
+    const provider = new GoogleAuthProvider();
+    try {
+      const userCredential: UserCredential = await signInWithPopup(auth, provider);
+      const firebaseUser = userCredential.user;
+      
+      const userDocRef = doc(db, "users", firebaseUser.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+         await setDoc(userDocRef, {
+          fullName: firebaseUser.displayName,
+          email: firebaseUser.email,
+          role: 'other', // default role
+        });
+      }
+      router.push('/dashboard');
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      setLoading(false);
+    }
+  };
 
   const logout = async () => {
     if (!auth) return;
@@ -85,7 +111,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, signup }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, signup, loginWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );
