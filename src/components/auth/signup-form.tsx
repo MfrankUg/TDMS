@@ -26,9 +26,9 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/auth";
 import { useTranslation } from "@/hooks/use-translation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ShieldCheck } from "lucide-react";
+import { AlertTriangle, ShieldCheck } from "lucide-react";
 import { useState } from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const formSchema = z.object({
   fullName: z.string().min(1, { message: "Full name is required." }),
@@ -79,6 +79,7 @@ export function SignupForm() {
   const { signup, loginWithGoogle } = useAuth();
   const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -109,15 +110,18 @@ export function SignupForm() {
 
   const handleGoogleLogin = async () => {
     setError(null);
+    setIsGoogleLoading(true);
     try {
       await loginWithGoogle();
     } catch (error: any) {
       if (error.code === 'auth/popup-closed-by-user') {
-        setError("The sign-in popup was closed. Please try again.");
+        setError("The sign-in popup was closed before completing. Please try again.");
       } else {
-        setError("Failed to sign in with Google. Please try again.");
+        setError("Failed to sign in with Google. Please try again later.");
       }
       console.error("Google login error:", error);
+    } finally {
+        setIsGoogleLoading(false);
     }
   };
 
@@ -136,6 +140,8 @@ export function SignupForm() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
              {error && (
               <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Signup Failed</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
@@ -259,7 +265,7 @@ export function SignupForm() {
                     <span>Your data is securely stored</span>
                 </div>
             </div>
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting || isGoogleLoading}>
               {form.formState.isSubmitting ? 'Creating Account...' : 'Sign Up'}
             </Button>
             <div className="relative my-4">
@@ -272,9 +278,13 @@ export function SignupForm() {
                 </span>
                 </div>
             </div>
-            <Button variant="outline" className="w-full" onClick={handleGoogleLogin}>
-                <GoogleIcon className="mr-2 h-5 w-5" />
-                Continue with Google
+             <Button variant="outline" className="w-full" onClick={handleGoogleLogin} disabled={form.formState.isSubmitting || isGoogleLoading}>
+                {isGoogleLoading ? (
+                    <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-primary mr-2"></div>
+                ) : (
+                    <GoogleIcon className="mr-2 h-5 w-5" />
+                )}
+                {isGoogleLoading ? 'Redirecting...' : 'Continue with Google'}
             </Button>
           </form>
         </Form>

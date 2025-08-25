@@ -51,6 +51,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
              photoURL: userData.photoURL,
            });
         } else {
+           // This case can happen if a user was created in Auth but their doc wasn't created in Firestore
+           // Or for a new Google Sign-In where we are about to create the doc.
            setUser({ 
              uid: firebaseUser.uid, 
              email: firebaseUser.email!, 
@@ -94,29 +96,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   
   const loginWithGoogle = async () => {
-    if (!auth || !db) return;
+    if (!auth || !db) {
+        throw new Error("Firebase has not been initialized yet.");
+    }
     setLoading(true);
     const provider = new GoogleAuthProvider();
     try {
-      const userCredential: UserCredential = await signInWithPopup(auth, provider);
-      const firebaseUser = userCredential.user;
-      
-      const userDocRef = doc(db, "users", firebaseUser.uid);
-      const userDoc = await getDoc(userDocRef);
+        const userCredential: UserCredential = await signInWithPopup(auth, provider);
+        const firebaseUser = userCredential.user;
+        
+        const userDocRef = doc(db, "users", firebaseUser.uid);
+        const userDoc = await getDoc(userDocRef);
 
-      if (!userDoc.exists()) {
-         await setDoc(userDocRef, {
-          fullName: firebaseUser.displayName,
-          email: firebaseUser.email,
-          photoURL: firebaseUser.photoURL,
-          role: 'other', // default role
-        });
-      }
-      router.push('/dashboard');
+        // If the user doesn't have a document in Firestore, create one.
+        if (!userDoc.exists()) {
+            await setDoc(userDocRef, {
+                fullName: firebaseUser.displayName,
+                email: firebaseUser.email,
+                photoURL: firebaseUser.photoURL,
+                role: 'other', // default role for Google sign-ins
+            });
+        }
+        // The onAuthStateChanged listener will handle setting the user state.
+        // We just need to route them to the dashboard.
+        router.push('/dashboard');
     } catch (error: any) {
-      console.error("Google sign-in error:", error);
-      setLoading(false);
-      throw error;
+        console.error("Google sign-in error in AuthProvider:", error);
+        // Let the calling component handle UI updates based on the error.
+        throw error;
+    } finally {
+        setLoading(false);
     }
   };
 
