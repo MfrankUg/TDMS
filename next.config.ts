@@ -32,6 +32,19 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com/ https://apis.google.com https://www.google.com; object-src 'none'; base-uri 'self'; ",
+          },
+        ],
+      },
+    ]
+  },
 };
 
 export default nextConfig;
