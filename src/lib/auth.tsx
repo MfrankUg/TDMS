@@ -47,12 +47,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
            setUser({ 
              uid: firebaseUser.uid, 
              email: firebaseUser.email!, 
-             fullName: userData.fullName,
-             photoURL: userData.photoURL,
+             fullName: userData.fullName || firebaseUser.displayName || 'User',
+             photoURL: userData.photoURL || firebaseUser.photoURL,
            });
         } else {
-           // This case can happen if a user was created in Auth but their doc wasn't created in Firestore
-           // Or for a new Google Sign-In where we are about to create the doc.
+           // This case can happen for a new Google Sign-In while the doc is being created in the background.
            setUser({ 
              uid: firebaseUser.uid, 
              email: firebaseUser.email!, 
@@ -104,28 +103,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
         const userCredential: UserCredential = await signInWithPopup(auth, provider);
         const firebaseUser = userCredential.user;
+
+        // Immediately navigate to the dashboard for a faster user experience
+        router.push('/dashboard');
         
         const userDocRef = doc(db, "users", firebaseUser.uid);
-        const userDoc = await getDoc(userDocRef);
 
-        // If the user doesn't have a document in Firestore, create one.
-        if (!userDoc.exists()) {
-            await setDoc(userDocRef, {
-                fullName: firebaseUser.displayName,
-                email: firebaseUser.email,
-                photoURL: firebaseUser.photoURL,
-                role: 'other', // default role for Google sign-ins
-            });
-        }
-        // The onAuthStateChanged listener will handle setting the user state.
-        // We just need to route them to the dashboard.
-        router.push('/dashboard');
+        // Perform the database check and write in the background
+        getDoc(userDocRef).then(userDoc => {
+            if (!userDoc.exists()) {
+                setDoc(userDocRef, {
+                    fullName: firebaseUser.displayName,
+                    email: firebaseUser.email,
+                    photoURL: firebaseUser.photoURL,
+                    role: 'other', // default role
+                }).catch(dbError => {
+                     console.error("Error creating user document in background:", dbError);
+                });
+            }
+        }).catch(error => {
+            console.error("Error fetching user document in background:", error);
+        });
+
     } catch (error: any) {
         console.error("Google sign-in error in AuthProvider:", error);
-        // Let the calling component handle UI updates based on the error.
-        throw error;
-    } finally {
-        setLoading(false);
+        setLoading(false); // Make sure to stop loading on error
+        throw error; // Re-throw to be caught by the calling form
     }
   };
 
