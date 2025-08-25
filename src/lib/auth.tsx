@@ -11,6 +11,7 @@ interface User {
   uid: string;
   email: string;
   fullName: string;
+  photoURL?: string | null;
 }
 
 interface AuthContextType {
@@ -39,11 +40,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const unsubscribe = onAuthStateChanged(authInstance, async (firebaseUser) => {
       if (firebaseUser) {
-        const userDoc = await getDoc(doc(dbInstance, "users", firebaseUser.uid));
+        const userDocRef = doc(dbInstance, "users", firebaseUser.uid);
+        const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-           setUser({ uid: firebaseUser.uid, email: firebaseUser.email!, fullName: userDoc.data().fullName });
+           const userData = userDoc.data();
+           setUser({ 
+             uid: firebaseUser.uid, 
+             email: firebaseUser.email!, 
+             fullName: userData.fullName,
+             photoURL: userData.photoURL,
+           });
         } else {
-           setUser({ uid: firebaseUser.uid, email: firebaseUser.email!, fullName: firebaseUser.displayName || firebaseUser.email! });
+           setUser({ 
+             uid: firebaseUser.uid, 
+             email: firebaseUser.email!, 
+             fullName: firebaseUser.displayName || firebaseUser.email!,
+             photoURL: firebaseUser.photoURL,
+            });
         }
       } else {
         setUser(null);
@@ -74,6 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       countryCode,
       telephone,
       role,
+      photoURL: firebaseUser.photoURL, // Initially null for email signup
     });
     
     router.push('/dashboard');
@@ -94,13 +108,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
          await setDoc(userDocRef, {
           fullName: firebaseUser.displayName,
           email: firebaseUser.email,
+          photoURL: firebaseUser.photoURL,
           role: 'other', // default role
         });
       }
       router.push('/dashboard');
     } catch (error: any) {
       console.error("Google sign-in error:", error);
-      // Let the calling component handle the error state
       setLoading(false);
       throw error;
     }

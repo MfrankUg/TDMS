@@ -13,7 +13,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/auth";
 import { Languages, Bell, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/language";
@@ -31,6 +31,13 @@ export function DashboardHeader() {
   
   const userInitial = user?.fullName?.[0].toUpperCase() || user?.email?.[0].toUpperCase() || "U";
   const hasNotifications = notifications.length > 0;
+
+  const obscureEmail = (email: string | undefined) => {
+    if (!email) return "";
+    const [name, domain] = email.split('@');
+    if (name.length <= 2) return `${name.slice(0, 1)}**@${domain}`;
+    return `${name.slice(0, 2)}${'*'.repeat(Math.min(8, name.length - 2))}@${domain}`;
+  };
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-card px-4 md:px-6 z-10">
@@ -97,6 +104,7 @@ export function DashboardHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
               <Avatar className="h-8 w-8">
+                  {user?.photoURL && <AvatarImage src={user.photoURL} alt={user.fullName || 'User'} />}
                   <AvatarFallback>{userInitial}</AvatarFallback>
               </Avatar>
               <span className="sr-only">{t('toggleUserMenu')}</span>
@@ -105,7 +113,7 @@ export function DashboardHeader() {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>
               <p>{user?.fullName || t('myAccount')}</p>
-              <p className="text-xs text-muted-foreground font-normal">{user?.email}</p>
+              <p className="text-xs text-muted-foreground font-normal">{obscureEmail(user?.email)}</p>
               </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onSelect={() => router.push('/dashboard/settings')}>{t('settings')}</DropdownMenuItem>
